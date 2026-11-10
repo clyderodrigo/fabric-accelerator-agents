@@ -12,13 +12,6 @@ dateng/
   accelerator-config.VariableLibrary/    <- new: environment-scoped values
   controlDB.SQLDatabase/
   dw_gold.Warehouse/
-  eh_fabricAccelerator.Eventhouse/
-  eh_fabricAccelerator.KQLDatabase/
-  eh_fabricAccelerator_queryset.KQLQueryset/
-  es_fabricEvents.Eventstream/
-  fabricEvents_queryset.KQLQueryset/
-  fabricEventsDashboard.KQLDashboard/
-  kdb_fabricEvents.KQLDatabase/
   lh_bronze.Lakehouse/
   lh_silver.Lakehouse/
   WideWorldImporters-mirror.MirroredDatabase/
