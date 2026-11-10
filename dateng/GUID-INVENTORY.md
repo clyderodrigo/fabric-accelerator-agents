@@ -139,7 +139,7 @@ Nine pipeline definitions and one notebook. Nothing else was modified.
 | `wwi-elt-framework` | Replaced pipeline variable `NotebookID_L1Transform-Generic-Fabric` with `libraryVariables.l1_notebook_id`. Removed the variable declaration and its hardcoded default. |
 | `Ingest ASQL Table` | Removed 2 hardcoded parameter defaults. Parameters kept - the orchestrator supplies them. |
 | `Ingest MirrorDB Table` | Removed 2 hardcoded parameter defaults. |
-| `Level1 Transform` | Removed 3 hardcoded parameter defaults. Removed the notebook activity's hardcoded `workspaceId` and `capacityId` so the activity inherits the pipeline's workspace and capacity. |
+| `Level1 Transform` | Removed 3 hardcoded parameter defaults. `workspaceId` set to the nil GUID `00000000-0000-0000-0000-000000000000` (current-workspace sentinel) instead of being omitted, because an omitted field resolves to `null` and breaks Fabric Git sync's dependency discovery. `capacityId` remains omitted. |
 | `Level2 Transform` | Removed 3 hardcoded parameter defaults. |
 | `EnvSettings` | Replaced three hardcoded workspace ids with `notebookutils.variableLibrary.getLibrary("accelerator-config")`. |
 

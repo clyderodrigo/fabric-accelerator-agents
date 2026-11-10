@@ -125,6 +125,12 @@ used (single workspace, single capacity).
 different capacity, that intent is gone. Confirm on the first TST run that the notebook lands on the
 expected capacity.
 
+**Git sync note (2026-11-10).** Omitting `workspaceId` entirely made the field resolve to
+`null`, which breaks Fabric Git sync's dependency discovery with
+`ActivityName ... contains an invalid WorkspaceId <null>`. The field is now set to the nil
+GUID `00000000-0000-0000-0000-000000000000` (Fabric's "current workspace" sentinel) so
+discovery succeeds while staying portable. `capacityId` remains omitted.
+
 ---
 
 ## F6 — `EnvSettings` Variable Library read is untested (Medium)
