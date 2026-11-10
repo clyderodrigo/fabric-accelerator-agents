@@ -29,8 +29,10 @@ Only do this after the core `dateng/` workspace is synced and verified.
    - Portal: Settings -> Manage connections and gateways -> New connection -> Azure SQL Database.
    - Enter the server/database endpoint and credentials (prefer a service principal or managed
      identity over a personal account).
-   - Record the connection id; it must replace `a0a57e51-5032-4e46-b0f0-493c9d2f51c9` in
-     `mirroring.json` for this tenant, or be bound through the mirror item's UI after sync.
+   - Record the connection id. Either edit `mirroring.json` by hand, or add the pair to
+     `fabric/connection-rebind.json` and run
+     `pwsh ./scripts/rebind-connections.ps1 -MappingFile ./fabric/connection-rebind.json`
+     before syncing.
 3. Copy this folder's item folders into the workspace's Git folder (the same level as the
    `dateng/` items) so Fabric sees them as direct children:
    ```
@@ -58,4 +60,3 @@ sync defect.
 
 Connections are unverifiable via MCP. Confirm existence, binding and credential validity in the
 portal (runbook 3).
-path: C:\Dev\fabric-accelerator-agents\dateng-optional\README.md

@@ -131,6 +131,26 @@ Say clearly: **a reference in a definition is not a working connection.**
 | Works for one person, not another | Connection uses a personal credential | Move to service principal or managed identity |
 | Two items, one source, different results | Different connections bound to the same source | Consolidate onto one connection per environment |
 
+## Rebinding connection GUIDs on a new tenant
+
+The connection GUIDs shipped in item definitions (`"connection": "<guid>"`) are the source
+tenant's. They are not expression slots, so they cannot be parameterised through the Variable
+Library, and they are validated at sync time - a definition that points at a connection the
+binding user cannot reach fails `Update from Git` with `RequestValidationFailed` /
+`ConnectionNotAccessible` before the item is created.
+
+Before syncing into a new tenant:
+
+1. Create the four connections (runbook 3 steps 1-3) and record their ids.
+2. Copy `fabric/connection-rebind.example.json` to `fabric/connection-rebind.json` and fill in the
+   target ids.
+3. Run `pwsh ./scripts/rebind-connections.ps1 -MappingFile ./fabric/connection-rebind.json`.
+4. Commit or keep the rebind as a local transform, then `Update from Git`.
+
+The script rewrites every occurrence in `dateng/`, `dateng-optional/` and `dateng-rti/` JSON
+definitions. It never touches `.platform` files or logicalIds. It is a repo file edit, not a
+tenant mutation.
+
 ## Known limitations
 
 - **Zero MCP coverage.** Every claim in this runbook's verification section is human-confirmed.

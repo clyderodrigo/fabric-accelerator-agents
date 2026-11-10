@@ -212,6 +212,22 @@ not by themselves change behaviour - do not mistake one for the other.
 
 `WideWorldImporters-mirror.MirroredDatabase/mirroring.json` has the same limitation.
 
+**New finding (2026-11-10).** The connection GUIDs are not only runtime bindings - Fabric
+validates them at **sync time**. A pipeline whose `connection` GUID does not exist or is
+inaccessible to the binding user fails `Update from Git` with `RequestValidationFailed` /
+`ConnectionNotAccessible` before the item is created. This means the whole pipeline set is
+connection-gated on alien soil, not just the mirror.
+
+**Mitigation.** Rebind the GUIDs per tenant before sync:
+1. Create the four connections in the target tenant (runbook 3) and record their ids.
+2. Copy `fabric/connection-rebind.example.json` to `fabric/connection-rebind.json`, fill in the
+   target ids.
+3. Run `pwsh ./scripts/rebind-connections.ps1 -MappingFile ./fabric/connection-rebind.json`.
+4. Commit the rebind (or keep it as a local, uncommitted transform) and then `Update from Git`.
+
+The rebind is a repo file edit, not a tenant mutation, and is the only way to make these
+definitions portable. See runbook 04 (Option B) and runbook 03.
+
 ---
 
 ## F10 — `%run` name mismatches (Low)
