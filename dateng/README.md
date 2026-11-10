@@ -1,6 +1,6 @@
 # `dateng/` - workspace items ready for Git integration
 
-The 30 items of the Fabric accelerator, flattened and parameterised so the folder can be connected
+The 29 portable items of the Fabric accelerator, flattened and parameterised so the folder can be connected
 to a Fabric workspace through Git integration.
 
 Every immediate child is an item folder named `<displayName>.<ItemType>` and carries a `.platform`
@@ -14,10 +14,15 @@ dateng/
   dw_gold.Warehouse/
   lh_bronze.Lakehouse/
   lh_silver.Lakehouse/
-  WideWorldImporters-mirror.MirroredDatabase/
   <8 notebooks>.Notebook/
   <10 pipelines>.DataPipeline/
 ```
+
+Connection-gated items (currently the `WideWorldImporters-mirror` MirroredDatabase) live in the
+sibling `dateng-optional/` folder, not here. They are deliberately excluded from the default sync
+set because Fabric validates their source connection at item create/update time and fails with
+`ConnectionNotAccessible` when the prerequisite connection or source database is missing. See
+`dateng-optional/README.md`.
 
 ## What changed relative to the source
 

@@ -21,6 +21,7 @@ Severity means: how likely is this to cost you a debugging session if you skip i
 | [F10](#f10--%run-name-mismatches-low) | Low | Notebooks | `%run` targets differ from item names | Leave unless it fails |
 | [F11](#f11--drift-check-will-report-items-out-of-scope-low-expected) | Low | Tooling | RTI items and VariableLibrary are outside release 1 scope | Expect it |
 | [F12](#f12--declared-environmentyaml-has-blank-values-low) | Low | Config | Workspace name, capacity SKU/region, Git details unset | Fill in from portal |
+| [F13](#f13--mirror-flow-is-connection-gated-medium) | Medium | MirroredDatabase | `WideWorldImporters-mirror` validates its source connection at sync time and fails with `ConnectionNotAccessible` on alien soil | Moved to `dateng-optional/`; provision source DB + connection first |
 
 ---
 
@@ -251,6 +252,33 @@ in the source pipeline, not from the portal - confirm it.
 
 `verify-environment` will report the blanks as missing assertions until they are filled. That is
 intended: a blank is honest, an invented GUID is not.
+
+---
+
+## F13 - Mirror flow is connection-gated (Medium)
+
+**What.** `WideWorldImporters-mirror.MirroredDatabase` carries
+`"connection": "a0a57e51-5032-4e46-b0f0-493c9d2f51c9"` in `mirroring.json`. Fabric validates
+that connection at item create/update time during Git sync, and raises `ConnectionNotAccessible`
+if the connection does not exist or its datasource is inaccessible to the binding user. The
+item is therefore not syncable on a tenant that has not provisioned the source Azure SQL
+database and a bound Fabric connection first. The two MirrorDB pipelines
+(`Ingest MirrorDB Table`, `Master ELT MirrorDB`) are not sync-blocking but are inert until the
+mirror and the `mirror_ingest_connection_id` connection exist.
+
+**Why this matters for an accelerator.** On alien soil the source database (WideWorldImporters)
+does not exist, and the connection id is tenant-specific. Leaving the item in `dateng/` makes
+every first sync fail on this item.
+
+**Action taken.** The mirror item was moved to `dateng-optional/` so the default `dateng/`
+sync set is clean. `dateng-optional/README.md` documents the provisioning and rebinding steps.
+The MirrorDB pipelines stay in `dateng/` and are documented as runtime-gated.
+
+**How to check.** Sync `dateng/` alone into a fresh workspace: it must complete with zero
+item-level errors. Then follow `dateng-optional/README.md` to add the mirror.
+
+**Related.** F9 (connection bindings are not wired to the library) - the same limitation, now
+with a concrete failure mode and a quarantine pattern.
 
 ---
 
