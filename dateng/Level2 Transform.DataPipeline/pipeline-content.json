@@ -1,0 +1,791 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Set RunID",
+        "type": "SetVariable",
+        "dependsOn": [],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "RunID",
+          "value": {
+            "value": "@pipeline().RunId",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "L2Transform - RUNNING",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "Set RunID",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[ELT].[InsertTransformInstance_L2]",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "storedProcedureParameters": {
+            "CustomParameters": {
+              "value": {
+                "value": "@pipeline().parameters.CustomParameters",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataFromNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "DataFromTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromTimestamp",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "DataToNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataToNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "DataToTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataToTimestamp",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "WatermarkColName": {
+              "value": {
+                "value": "@pipeline().parameters.WatermarkColName",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "IngestADFPipelineRunID": {
+              "value": {
+                "value": "@pipeline()?.TriggeredByPipelineRunId",
+                "type": "Expression"
+              },
+              "type": "Guid"
+            },
+            "IngestID": {
+              "value": {
+                "value": "@pipeline().parameters.IngestID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "InputDWTable": {
+              "value": {
+                "value": "@pipeline().parameters.InputDWTable",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFile": {
+              "value": {
+                "value": "@pipeline().parameters.InputFile",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFileDelimiter": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileDelimiter",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFileFolder": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileFolder",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFileHeaderFlag": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileHeaderFlag",
+                "type": "Expression"
+              },
+              "type": "Boolean"
+            },
+            "InputFileSystem": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileSystem",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "L1TransformADFPipelineRunID": {
+              "value": {
+                "value": "@pipeline()?.TriggeredByPipelineRunId",
+                "type": "Expression"
+              },
+              "type": "Guid"
+            },
+            "L1TransformID": {
+              "value": {
+                "value": "@pipeline().parameters.L1TransformID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L2TransformID": {
+              "value": {
+                "value": "@pipeline().parameters.L2TransformID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "LookupColumns": {
+              "value": {
+                "value": "@pipeline().parameters.LookupColumns",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "MaxRetries": {
+              "value": {
+                "value": "@pipeline().parameters.MaxRetries",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "ComputeName": {
+              "value": {
+                "value": "@pipeline().parameters.ComputeName",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "ComputePath": {
+              "value": {
+                "value": "@pipeline().parameters.ComputePath",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputDWStagingTable": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWStagingTable",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputDWTable": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWTable",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputDWTableWriteMode": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWTableWriteMode",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFile": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFile",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFileDelimiter": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFileDelimiter",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFileFormat": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFileFormat",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFileWriteMode": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFileWriteMode",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFolder": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFolder",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CurateFileSystem": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CurateFileSystem",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      },
+      {
+        "name": "EXEC L2Transform",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "L2Transform - RUNNING",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": {
+            "value": "@pipeline().parameters.ComputeName",
+            "type": "Expression"
+          },
+          "storedProcedureParameters": {
+            "L2TransformInstanceID": {
+              "value": {
+                "value": "@pipeline().parameters.L2TransformInstanceID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L2TransformID": {
+              "value": {
+                "value": "@pipeline().parameters.L2TransformID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "IngestID": {
+              "value": {
+                "value": "@pipeline().parameters.IngestID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformID": {
+              "value": {
+                "value": "@pipeline().parameters.L1TransformID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "CustomParameters": {
+              "value": {
+                "value": "@pipeline().parameters.CustomParameters",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputType": {
+              "value": {
+                "value": "@pipeline().parameters.InputType",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFileSystem": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileSystem",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFileFolder": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileFolder",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFile": {
+              "value": {
+                "value": "@pipeline().parameters.InputFile",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFileDelimiter": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileDelimiter",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "InputFileHeaderFlag": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileHeaderFlag",
+                "type": "Expression"
+              },
+              "type": "Int16"
+            },
+            "InputDWTable": {
+              "value": {
+                "value": "@pipeline().parameters.InputDWTable",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "WatermarkColName": {
+              "value": {
+                "value": "@pipeline().parameters.WatermarkColName",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "DataFromTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromTimestamp",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataToTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataToTimestamp",
+                "type": "Expression"
+              },
+              "type": "Datetime"
+            },
+            "DataFromNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "DataToNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataToNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "OutputL2CurateFileSystem": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CurateFileSystem",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFolder": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFolder",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFile": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFile",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFileDelimiter": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFileDelimiter",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFileFormat": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFileFormat",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputL2CuratedFileWriteMode": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL2CuratedFileWriteMode",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputDWStagingTable": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWStagingTable",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "LookupColumns": {
+              "value": {
+                "value": "@pipeline().parameters.LookupColumns",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputDWTable": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWTable",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "OutputDWTableWriteMode": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWTableWriteMode",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "dw_gold",
+          "properties": {
+            "annotations": [],
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "endpoint": "@pipeline().parameters.GoldDWEndpoint",
+              "artifactId": "@pipeline().parameters.GoldObjectID",
+              "workspaceId": "@pipeline().parameters.GoldWorkspaceID"
+            }
+          }
+        }
+      },
+      {
+        "name": "L2 Transform - SUCCESS",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "EXEC L2Transform",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[ELT].[UpdateTransformInstance_L2]",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "storedProcedureParameters": {
+            "DataFromNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "DataFromTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromTimestamp",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "DataToNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataToNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "DataToTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataToTimestamp",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "InputCount": {
+              "value": "0",
+              "type": "Int32"
+            },
+            "L2TransformADFPipelineRunID": {
+              "value": {
+                "value": "@variables('RunID')",
+                "type": "Expression"
+              },
+              "type": "Guid"
+            },
+            "L2TransformInsertCount": {
+              "value": null,
+              "type": "Int32"
+            },
+            "L2TransformInstanceId": {
+              "value": {
+                "value": "@pipeline().parameters.L2TransformInstanceID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L2TransformStatus": {
+              "value": "Success",
+              "type": "String"
+            },
+            "MaxRetries": {
+              "value": {
+                "value": "@pipeline().parameters.MaxRetries",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L2TransformUpdateCount": {
+              "value": null,
+              "type": "Int32"
+            },
+            "L2TransformDeleteCount": {
+              "value": null,
+              "type": "Int32"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      },
+      {
+        "name": "L2 Transform - FAILURE",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "EXEC L2Transform",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[ELT].[UpdateTransformInstance_L2]",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "storedProcedureParameters": {
+            "DataFromNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "DataFromTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromTimestamp",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "DataToNumber": {
+              "value": {
+                "value": "@pipeline().parameters.DataToNumber",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "DataToTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataToTimestamp",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "L2TransformADFPipelineRunID": {
+              "value": {
+                "value": "@variables('RunID')",
+                "type": "Expression"
+              },
+              "type": "Guid"
+            },
+            "L2TransformInstanceId": {
+              "value": {
+                "value": "@pipeline().parameters.L2TransformInstanceID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L2TransformStatus": {
+              "value": "Failure",
+              "type": "String"
+            },
+            "MaxRetries": {
+              "value": {
+                "value": "@pipeline().parameters.MaxRetries",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      }
+    ],
+    "parameters": {
+      "L2TransformInstanceID": {
+        "type": "int",
+        "defaultValue": 1
+      },
+      "L2TransformID": {
+        "type": "int",
+        "defaultValue": 3
+      },
+      "IngestID": {
+        "type": "int",
+        "defaultValue": 21
+      },
+      "L1TransformID": {
+        "type": "int",
+        "defaultValue": 21
+      },
+      "ComputePath": {
+        "type": "string"
+      },
+      "ComputeName": {
+        "type": "string",
+        "defaultValue": "[gold].[create_orders_monthly_snapshot]"
+      },
+      "InputType": {
+        "type": "string",
+        "defaultValue": "Curated"
+      },
+      "InputFileSystem": {
+        "type": "string",
+        "defaultValue": "Tables"
+      },
+      "InputFileFolder": {
+        "type": "string",
+        "defaultValue": "silver.sales_orders"
+      },
+      "InputFile": {
+        "type": "string"
+      },
+      "InputFileDelimiter": {
+        "type": "string"
+      },
+      "InputFileHeaderFlag": {
+        "type": "int"
+      },
+      "InputDWTable": {
+        "type": "string",
+        "defaultValue": "silver.sales_orders"
+      },
+      "WatermarkColName": {
+        "type": "string",
+        "defaultValue": "LastEditedWhen"
+      },
+      "DataFromTimestamp": {
+        "type": "string"
+      },
+      "DataToTimestamp": {
+        "type": "string"
+      },
+      "DataFromNumber": {
+        "type": "int"
+      },
+      "DataToNumber": {
+        "type": "int"
+      },
+      "OutputL2CurateFileSystem": {
+        "type": "string",
+        "defaultValue": "Tables"
+      },
+      "OutputL2CuratedFolder": {
+        "type": "string",
+        "defaultValue": "gold"
+      },
+      "OutputL2CuratedFile": {
+        "type": "string",
+        "defaultValue": "orders_monthly_snapshot"
+      },
+      "OutputL2CuratedFileDelimiter": {
+        "type": "string"
+      },
+      "OutputL2CuratedFileFormat": {
+        "type": "string"
+      },
+      "OutputL2CuratedFileWriteMode": {
+        "type": "string"
+      },
+      "OutputDWStagingTable": {
+        "type": "string"
+      },
+      "LookupColumns": {
+        "type": "string"
+      },
+      "OutputDWTable": {
+        "type": "string",
+        "defaultValue": "[gold].[orders_monthly_snapshot]"
+      },
+      "OutputDWTableWriteMode": {
+        "type": "string",
+        "defaultValue": "append"
+      },
+      "ReRunL2TransformFlag": {
+        "type": "int"
+      },
+      "MaxRetries": {
+        "type": "int",
+        "defaultValue": 3
+      },
+      "CustomParameters": {
+        "type": "string"
+      },
+      "GoldObjectID": {
+        "type": "string"
+      },
+      "GoldWorkspaceID": {
+        "type": "string"
+      },
+      "GoldDWEndpoint": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "RunID": {
+        "type": "String"
+      }
+    }
+  }
+}

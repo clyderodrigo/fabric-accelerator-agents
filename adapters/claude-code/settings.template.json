@@ -1,0 +1,60 @@
+{
+  "permissions": {
+    "deny": [
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__delete_workspace",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__delete_item",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__delete_folder",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__delete_workspace_role",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_delete_shortcut",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_delete_data_access_role",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__delete_*"
+    ],
+    "ask": [
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__create_workspace",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__update_workspace",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__add_workspace_role",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__update_workspace_role",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__create_item",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__update_item",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__update_item_definition",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__create_folder",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__update_folder",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__move_folder",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__bulk_move_items",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_create_shortcut",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_create_shortcuts_in_bulk",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_create_or_update_single_data_access_role",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_create_or_update_data_access_roles",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_modify_default_tier",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_modify_diagnostics",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_modify_immutability_policy",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_reset_shortcut_cache"
+    ],
+    "allow": [
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__search_catalog",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__list_workspaces",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_workspace",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__list_workspace_roles",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_workspace_role",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__list_items",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_item",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_item_definition",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__list_folders",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_folder",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__list_capacities",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_operation_state",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_operation_result",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__get_knowledge",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_list_shortcuts",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_get_shortcut",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_list_data_access_roles",
+      "mcp__plugin_fabric-accelerator-agents_fabric-core__onelake_get_settings",
+      "mcp__plugin_fabric-accelerator-agents_fabric-local__docs_list-item-types",
+      "mcp__plugin_fabric-accelerator-agents_fabric-local__docs_item-api-spec",
+      "mcp__plugin_fabric-accelerator-agents_fabric-local__docs_platform-api-spec",
+      "mcp__plugin_fabric-accelerator-agents_fabric-local__docs_item-definitions",
+      "mcp__plugin_fabric-accelerator-agents_fabric-local__docs_best-practices",
+      "mcp__plugin_fabric-accelerator-agents_fabric-local__docs_api-examples"
+    ]
+  }
+}

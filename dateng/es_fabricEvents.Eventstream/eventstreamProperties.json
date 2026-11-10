@@ -1,0 +1,5 @@
+{
+  "retentionTimeInDays": 90,
+  "eventThroughputLevel": "Low",
+  "schemaMode": "None"
+}

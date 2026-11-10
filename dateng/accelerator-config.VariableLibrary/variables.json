@@ -1,0 +1,83 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/variableLibrary/definition/variables/1.0.0/schema.json",
+  "variables": [
+    {
+      "name": "bronze_workspace_id",
+      "type": "String",
+      "value": "8d8d00a7-0e8a-4e3b-8c0e-8dcafac7adec",
+      "note": "Workspace holding the bronze layer. In this accelerator all layers share one workspace; split per value set if that changes."
+    },
+    {
+      "name": "silver_workspace_id",
+      "type": "String",
+      "value": "8d8d00a7-0e8a-4e3b-8c0e-8dcafac7adec",
+      "note": "Workspace holding the silver layer."
+    },
+    {
+      "name": "gold_workspace_id",
+      "type": "String",
+      "value": "8d8d00a7-0e8a-4e3b-8c0e-8dcafac7adec",
+      "note": "Workspace holding the gold layer."
+    },
+    {
+      "name": "bronze_lakehouse_id",
+      "type": "String",
+      "value": "c6c5024f-de55-45ca-a79a-decbe16235e3",
+      "note": "Bronze lakehouse item id. Source value; resolve per environment before promotion."
+    },
+    {
+      "name": "silver_lakehouse_id",
+      "type": "String",
+      "value": "cc80a0ab-603d-4df9-bdfc-c35a7e8ab095",
+      "note": "Silver lakehouse item id. Source value; resolve per environment before promotion."
+    },
+    {
+      "name": "gold_warehouse_id",
+      "type": "String",
+      "value": "7e2bbf6b-43fb-498c-90e3-56199c8c3b5e",
+      "note": "Gold warehouse item id. Source value; resolve per environment before promotion."
+    },
+    {
+      "name": "gold_sql_endpoint",
+      "type": "String",
+      "value": "2ipjetq4tn6elkixc3xundvzbi-u4ai3dmkby5u5daorxfpvr5n5q.datawarehouse.fabric.microsoft.com",
+      "note": "Gold warehouse SQL analytics endpoint host. Environment specific; regenerate per workspace."
+    },
+    {
+      "name": "l1_notebook_id",
+      "type": "String",
+      "value": "3e035f81-2c25-416b-9009-b7ba22e444ab",
+      "note": "L1Transform-Generic-Fabric notebook item id used as the compute reference."
+    },
+    {
+      "name": "capacity_id",
+      "type": "String",
+      "value": "e4eb626a-4082-4143-983d-6fc9284b74cd",
+      "note": "Capacity the workspace is assigned to. Declared for visibility; no documented Variable Library consumer slot exists for a pipeline capacityId."
+    },
+    {
+      "name": "control_db_connection_id",
+      "type": "String",
+      "value": "78e8d795-a55c-412e-9b76-47ba404b4d51",
+      "note": "Connection to the controlDB SQL database. Declared for central visibility; pipeline activity connection binding is not a Variable Library consumer slot."
+    },
+    {
+      "name": "source_sql_connection_id",
+      "type": "String",
+      "value": "e7e44202-0cc1-4947-8192-a97761f62679",
+      "note": "Connection to the WideWorldImporters source SQL database. Declared, not VL-wired."
+    },
+    {
+      "name": "mirror_source_connection_id",
+      "type": "String",
+      "value": "a0a57e51-5032-4e46-b0f0-493c9d2f51c9",
+      "note": "MirroredDatabase source connection (AzureSqlDatabase). Declared, not VL-wired."
+    },
+    {
+      "name": "mirror_ingest_connection_id",
+      "type": "String",
+      "value": "69dfd2df-8257-4218-8002-a4222dc3d1a6",
+      "note": "Connection used by Ingest MirrorDB Table. Declared, not VL-wired."
+    }
+  ]
+}

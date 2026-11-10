@@ -1,0 +1,102 @@
+{
+  "$comment": "Canonical inventory of official Fabric MCP tools. This file is the single source for permission rules in both adapters. The build script translates it into Claude Code (mcp__server__tool) and OpenCode V2 (<server>_<tool>) rule shapes. Do not hand-edit generated permission blocks.",
+  "verified": "2026-11-09",
+  "sources": [
+    "https://learn.microsoft.com/en-us/rest/api/fabric/articles/mcp-servers/core-remote/tools-core-mcp-server",
+    "https://learn.microsoft.com/en-us/rest/api/fabric/articles/mcp-servers/pro-dev-local/tools-local-mcp-server"
+  ],
+  "policy": {
+    "delete": "deny",
+    "roleChange": "ask",
+    "write": "ask",
+    "read": "allow"
+  },
+  "roleChangeTools": [
+    "add_workspace_role",
+    "update_workspace_role",
+    "delete_workspace_role"
+  ],
+  "servers": {
+    "fabric-core": {
+      "kind": "remote",
+      "transport": "http",
+      "url": "https://api.fabric.microsoft.com/v1/mcp/core",
+      "authScope": "https://api.fabric.microsoft.com/.default",
+      "read": [
+        "search_catalog",
+        "list_workspaces",
+        "get_workspace",
+        "list_workspace_roles",
+        "get_workspace_role",
+        "list_items",
+        "get_item",
+        "get_item_definition",
+        "list_folders",
+        "get_folder",
+        "list_capacities",
+        "get_operation_state",
+        "get_operation_result",
+        "get_knowledge",
+        "onelake_list_shortcuts",
+        "onelake_get_shortcut",
+        "onelake_list_data_access_roles",
+        "onelake_get_settings"
+      ],
+      "write": [
+        "create_workspace",
+        "update_workspace",
+        "add_workspace_role",
+        "update_workspace_role",
+        "create_item",
+        "update_item",
+        "update_item_definition",
+        "create_folder",
+        "update_folder",
+        "move_folder",
+        "bulk_move_items",
+        "onelake_create_shortcut",
+        "onelake_create_shortcuts_in_bulk",
+        "onelake_create_or_update_single_data_access_role",
+        "onelake_create_or_update_data_access_roles",
+        "onelake_modify_default_tier",
+        "onelake_modify_diagnostics",
+        "onelake_modify_immutability_policy",
+        "onelake_reset_shortcut_cache"
+      ],
+      "delete": [
+        "delete_workspace",
+        "delete_item",
+        "delete_folder",
+        "delete_workspace_role",
+        "onelake_delete_shortcut",
+        "onelake_delete_data_access_role"
+      ]
+    },
+    "fabric-local": {
+      "kind": "local",
+      "transport": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@microsoft/fabric-mcp@latest",
+        "server",
+        "start",
+        "--mode",
+        "all",
+        "--namespace",
+        "docs"
+      ],
+      "namespaces": ["docs"],
+      "read": [
+        "docs_list-item-types",
+        "docs_item-api-spec",
+        "docs_platform-api-spec",
+        "docs_item-definitions",
+        "docs_best-practices",
+        "docs_api-examples"
+      ],
+      "write": [],
+      "delete": []
+    }
+  }
+}

@@ -1,0 +1,288 @@
+{
+    "properties": {
+    "libraryVariables": {
+      "gold_workspace_id": {
+        "libraryName": "accelerator-config",
+        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "variableName": "gold_workspace_id",
+        "type": "String"
+      },
+      "gold_warehouse_id": {
+        "libraryName": "accelerator-config",
+        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "variableName": "gold_warehouse_id",
+        "type": "String"
+      },
+      "gold_sql_endpoint": {
+        "libraryName": "accelerator-config",
+        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "variableName": "gold_sql_endpoint",
+        "type": "String"
+      }
+    },
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderStoredProcedureName": "[ELT].[GetTransformInstance_L2]",
+            "storedProcedureParameters": {
+              "DelayL2TransformationFlag": {
+                "type": "Int32",
+                "value": {
+                  "value": "@pipeline().parameters.DelayL2TransformationFlag",
+                  "type": "Expression"
+                }
+              },
+              "MaxTransformInstance": {
+                "type": "Int32",
+                "value": {
+                  "value": "@pipeline().parameters.MaxTransformInstance",
+                  "type": "Expression"
+                }
+              },
+              "SourceSystemName": {
+                "type": "String",
+                "value": {
+                  "value": "@pipeline().parameters.SourceSystemName",
+                  "type": "Expression"
+                }
+              },
+              "StreamName": {
+                "type": "String",
+                "value": {
+                  "value": "@pipeline().parameters.StreamName",
+                  "type": "Expression"
+                }
+              }
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "AzureSqlTable",
+            "typeProperties": {
+              "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+            },
+            "schema": [],
+            "externalReferences": {
+              "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get Level2 Transform Instances",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "batchCount": 10,
+          "items": {
+            "value": "@activity('Get Level2 Transform Instances').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "ExecutePipeline",
+              "typeProperties": {
+                "pipeline": {
+                  "referenceName": "5a473c1e-fd95-4b0a-a4a0-33537c65a0d7",
+                  "type": "PipelineReference"
+                },
+                "parameters": {
+                  "L2TransformInstanceID": {
+                    "value": "@item().L2TransformInstanceID",
+                    "type": "Expression"
+                  },
+                  "L2TransformID": {
+                    "value": "@item().L2TransformID",
+                    "type": "Expression"
+                  },
+                  "IngestID": {
+                    "value": "@item().IngestID",
+                    "type": "Expression"
+                  },
+                  "L1TransformID": {
+                    "value": "@item().L1TransformID",
+                    "type": "Expression"
+                  },
+                  "ComputePath": {
+                    "value": "@item().ComputePath",
+                    "type": "Expression"
+                  },
+                  "ComputeName": {
+                    "value": "@item().ComputeName",
+                    "type": "Expression"
+                  },
+                  "InputType": {
+                    "value": "@item().InputType",
+                    "type": "Expression"
+                  },
+                  "InputFileSystem": {
+                    "value": "@item().InputFileSystem",
+                    "type": "Expression"
+                  },
+                  "InputFileFolder": {
+                    "value": "@item().InputFileFolder",
+                    "type": "Expression"
+                  },
+                  "InputFile": {
+                    "value": "@item().InputFile",
+                    "type": "Expression"
+                  },
+                  "InputFileDelimiter": {
+                    "value": "@item().InputFileDelimiter",
+                    "type": "Expression"
+                  },
+                  "InputFileHeaderFlag": {
+                    "value": "@item().InputFileHeaderFlag",
+                    "type": "Expression"
+                  },
+                  "InputDWTable": {
+                    "value": "@item().InputDWTable",
+                    "type": "Expression"
+                  },
+                  "WatermarkColName": {
+                    "value": "@item().WatermarkColName",
+                    "type": "Expression"
+                  },
+                  "DataFromTimestamp": {
+                    "value": "@item().DataFromTimestamp",
+                    "type": "Expression"
+                  },
+                  "DataToTimestamp": {
+                    "value": "@item().DataToTimestamp",
+                    "type": "Expression"
+                  },
+                  "DataFromNumber": {
+                    "value": "@item().DataFromNumber",
+                    "type": "Expression"
+                  },
+                  "DataToNumber": {
+                    "value": "@item().DataToNumber",
+                    "type": "Expression"
+                  },
+                  "OutputL2CurateFileSystem": {
+                    "value": "@item().OutputL2CurateFileSystem",
+                    "type": "Expression"
+                  },
+                  "OutputL2CuratedFolder": {
+                    "value": "@item().OutputL2CuratedFolder",
+                    "type": "Expression"
+                  },
+                  "OutputL2CuratedFile": {
+                    "value": "@item().OutputL2CuratedFile",
+                    "type": "Expression"
+                  },
+                  "OutputL2CuratedFileDelimiter": {
+                    "value": "@item().OutputL2CuratedFileDelimiter",
+                    "type": "Expression"
+                  },
+                  "OutputL2CuratedFileFormat": {
+                    "value": "@item().OutputL2CuratedFileFormat",
+                    "type": "Expression"
+                  },
+                  "OutputL2CuratedFileWriteMode": {
+                    "value": "@item().OutputL2CuratedFileWriteMode",
+                    "type": "Expression"
+                  },
+                  "OutputDWStagingTable": {
+                    "value": "@item().OutputDWStagingTable",
+                    "type": "Expression"
+                  },
+                  "LookupColumns": {
+                    "value": "@item().LookupColumns",
+                    "type": "Expression"
+                  },
+                  "OutputDWTable": {
+                    "value": "@item().OutputDWTable",
+                    "type": "Expression"
+                  },
+                  "OutputDWTableWriteMode": {
+                    "value": "@item().OutputDWTableWriteMode",
+                    "type": "Expression"
+                  },
+                  "ReRunL2TransformFlag": {
+                    "value": "@item().ReRunL2TransformFlag",
+                    "type": "Expression"
+                  },
+                  "MaxRetries": {
+                    "value": "@item().MaxRetries",
+                    "type": "Expression"
+                  },
+                  "CustomParameters": {
+                    "value": "@item().CustomParameters",
+                    "type": "Expression"
+                  },
+                  "GoldObjectID": {
+                    "value": "@pipeline().libraryVariables.gold_warehouse_id",
+                    "type": "Expression"
+                  },
+                  "GoldWorkspaceID": {
+                    "value": "@pipeline().libraryVariables.gold_workspace_id",
+                    "type": "Expression"
+                  },
+                  "GoldDWEndpoint": {
+                    "value": "@pipeline().libraryVariables.gold_sql_endpoint",
+                    "type": "Expression"
+                  }
+                },
+                "waitOnCompletion": true
+              },
+              "policy": {
+                "secureInput": false
+              },
+              "name": "Level2 Transform",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach Level2 Instance",
+        "dependsOn": [
+          {
+            "activity": "Get Level2 Transform Instances",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "SourceSystemName": {
+        "type": "string",
+        "defaultValue": "WWI"
+      },
+      "StreamName": {
+        "type": "string"
+      },
+      "MaxTransformInstance": {
+        "type": "int",
+        "defaultValue": 100
+      },
+      "DelayL2TransformationFlag": {
+        "type": "int",
+        "defaultValue": 0
+      },
+      "GoldObjectID": {
+        "type": "string"
+      },
+      "GoldWorkspaceID": {
+        "type": "string"
+      },
+      "GoldDWEndpoint": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "fabric-accelerator-agents",
+  "version": "0.1.0",
+  "description": "Guide-and-verify deployment of Microsoft Fabric environments: provisioning checklists, Git and deployment pipeline runbooks, read-only verification, drift checks, and guardrails for the official Fabric MCP servers.",
+  "author": {
+    "name": "Fabric Accelerator maintainers"
+  },
+  "license": "MIT",
+  "keywords": [
+    "fabric",
+    "deployment",
+    "guardrails",
+    "drift",
+    "verification",
+    "mcp"
+  ]
+}

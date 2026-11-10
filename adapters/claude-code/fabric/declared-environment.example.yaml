@@ -1,0 +1,142 @@
+# Example declared environment for a single dev repo with one folder per workspace.
+# Copy to fabric/declared-environment.yaml in the consuming repo and replace values.
+# Item inventory is NOT declared here — it is read from each folder's .platform files.
+
+version: 1
+
+tenant:
+  name: contoso
+  id: ""
+
+capacity:
+  displayName: FabricCapacity01
+  id: ""
+  sku: F2
+  region: westeurope
+
+workspaces:
+  - key: dateng
+    displayName: "[DEV] DatEng"
+    stage: dev
+    capacity: FabricCapacity01
+    roles:
+      - principal: "group:data-platform-engineers@contoso.com"
+        role: Admin
+      - principal: "group:bi-developers@contoso.com"
+        role: Viewer
+    git:
+      provider: azure-devops
+      organization: contoso
+      project: fabric
+      repository: fabric-accelerator
+      branch: main
+      directory: /workspace/dateng
+    dependsOn: []
+    notes: "Owns bronze and silver. Publishes shared lakehouses consumed by data and analytics."
+
+  - key: data
+    displayName: "[DEV] Data"
+    stage: dev
+    capacity: FabricCapacity01
+    roles:
+      - principal: "group:data-platform-engineers@contoso.com"
+        role: Admin
+    git:
+      provider: azure-devops
+      organization: contoso
+      project: fabric
+      repository: fabric-accelerator
+      branch: main
+      directory: /workspace/data
+    dependsOn: [dateng]
+    notes: "Reads dateng lakehouses via shortcuts. Owns the warehouse and SQL database."
+
+  - key: analytics
+    displayName: "[DEV] Analytics"
+    stage: dev
+    capacity: FabricCapacity01
+    roles:
+      - principal: "group:data-platform-engineers@contoso.com"
+        role: Admin
+      - principal: "group:bi-developers@contoso.com"
+        role: Contributor
+    git:
+      provider: azure-devops
+      organization: contoso
+      project: fabric
+      repository: fabric-accelerator
+      branch: main
+      directory: /workspace/analytics
+    dependsOn: [data]
+    notes: "Semantic models and reports. Depends on data for warehouse tables."
+
+connections:
+  - name: sql-dev
+    type: Sql
+    scope: workspace
+    usedBy:
+      - workspace: data
+        item: pl_load_silver
+    declared: true
+
+  - name: adls-raw-dev
+    type: AzureDataLakeStorage
+    scope: tenant
+    usedBy:
+      - workspace: dateng
+        item: pl_ingest_bronze
+    declared: true
+
+crossWorkspaceReferences:
+  - from: { workspace: data, item: pl_load_silver }
+    to:   { workspace: dateng, item: lh_bronze }
+    kind: lakehouse
+    resolution: same-stage
+    notes: "Must resolve to the TST lakehouse after promotion. Rule or parameterisation required."
+
+  - from: { workspace: analytics, item: sm_sales }
+    to:   { workspace: data, item: dw_gold }
+    kind: warehouse
+    resolution: same-stage
+    notes: "Semantic model connection must be rebound per stage."
+
+  - from: { workspace: data, item: WideWorldImporters-mirror }
+    to:   { workspace: data, item: sql-wwi }
+    kind: connection
+    resolution: parameterised
+    notes: "Mirroring source connection is environment-specific and cannot be shared."
+
+deploymentPipelines:
+  - name: dateng-pipeline
+    stages: [DEV, TST, PRD]
+    workspaces:
+      DEV: "[DEV] DatEng"
+      TST: "[TST] DatEng"
+      PRD: "[PRD] DatEng"
+    rules:
+      - item: pl_ingest_bronze
+        property: connection
+        values:
+          TST: adls-raw-tst
+          PRD: adls-raw-prd
+
+  - name: data-pipeline
+    stages: [DEV, TST, PRD]
+    workspaces:
+      DEV: "[DEV] Data"
+      TST: "[TST] Data"
+      PRD: "[PRD] Data"
+    rules:
+      - item: pl_load_silver
+        property: connection
+        values:
+          TST: sql-tst
+          PRD: sql-prd
+
+  - name: analytics-pipeline
+    stages: [DEV, TST, PRD]
+    workspaces:
+      DEV: "[DEV] Analytics"
+      TST: "[TST] Analytics"
+      PRD: "[PRD] Analytics"
+    rules: []

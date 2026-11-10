@@ -1,0 +1,116 @@
+{
+  "properties": {
+    "activities": [],
+    "parameters": {
+      "IngestID": {
+        "type": "int",
+        "defaultValue": 49
+      },
+      "SourceSystemName": {
+        "type": "string",
+        "defaultValue": "FabricLogEvents"
+      },
+      "StreamName": {
+        "type": "string",
+        "defaultValue": "PipelineJobs"
+      },
+      "Backend": {
+        "type": "string",
+        "defaultValue": "OneLake"
+      },
+      "EntityName": {
+        "type": "string",
+        "defaultValue": "jobs.pipelineJobs"
+      },
+      "WatermarkColName": {
+        "type": "string",
+        "defaultValue": "EventProcessedUtcTime"
+      },
+      "LastDeltaDate": {
+        "type": "string",
+        "defaultValue": "2025-02-07 14:00:00.0000000"
+      },
+      "DataFromTimestamp": {
+        "type": "string",
+        "defaultValue": "2025-02-07 14:00:00.0000000"
+      },
+      "DataToTimestamp": {
+        "type": "string",
+        "defaultValue": "2025-02-08 14:00:00.0000000"
+      },
+      "LastDeltaNumber": {
+        "type": "int"
+      },
+      "DataFromNumber": {
+        "type": "int"
+      },
+      "DataToNumber": {
+        "type": "int"
+      },
+      "DataFormat": {
+        "type": "string",
+        "defaultValue": "LH Table"
+      },
+      "SourceStructure": {
+        "type": "string"
+      },
+      "MaxIntervalMinutes": {
+        "type": "int",
+        "defaultValue": 1440
+      },
+      "MaxIntervalNumber": {
+        "type": "int"
+      },
+      "DataMapping": {
+        "type": "string"
+      },
+      "RunSequence": {
+        "type": "int",
+        "defaultValue": 100
+      },
+      "ActiveFlag": {
+        "type": "bool",
+        "defaultValue": true
+      },
+      "L1TransformationReqdFlag": {
+        "type": "bool",
+        "defaultValue": false
+      },
+      "L2TransformationReqdFlag": {
+        "type": "bool",
+        "defaultValue": false
+      },
+      "DelayL1TransformationFlag": {
+        "type": "bool",
+        "defaultValue": false
+      },
+      "DelayL2TransformationFlag": {
+        "type": "bool",
+        "defaultValue": false
+      },
+      "DestinationRawFileSystem": {
+        "type": "string",
+        "defaultValue": "lh_fabricEvents"
+      },
+      "DestinationRawFolder": {
+        "type": "string",
+        "defaultValue": "Tables/jobs/pipelineJobs"
+      },
+      "DestinationRawFile": {
+        "type": "string"
+      },
+      "SourceSQL": {
+        "type": "string",
+        "defaultValue": "SELECT * FROM jobs.pipelineJobs WHERE EventProcessedUtcTime > '2025-02-07 14:00:00.0000000' AND EventProcessedUtcTime<='2025-02-08 14:00:00.0000000'"
+      },
+      "StatSQL": {
+        "type": "string",
+        "defaultValue": "SELECT MIN(EventProcessedUtcTime) AS DataFromTimestamp, MAX(EventProcessedUtcTime) AS DataToTimestamp, count(1) as SourceCount FROM jobs.pipelineJobs WHERE EventProcessedUtcTime > '2025-02-07 14:00:00.0000000' AND EventProcessedUtcTime <= '2025-02-08 14:00:00.0000000'"
+      },
+      "ReloadFlag": {
+        "type": "bool",
+        "defaultValue": false
+      }
+    }
+  }
+}

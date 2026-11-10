@@ -1,0 +1,1577 @@
+{
+  "schema_version": 74,
+  "pagesNavWidth": 223.33334350585938,
+  "autoRefresh": {
+    "enabled": true,
+    "defaultInterval": "1d",
+    "minInterval": "1h"
+  },
+  "tiles": [
+    {
+      "id": "8f22e80a-d093-4f06-865b-6f9561dfd321",
+      "title": "Most Visited Workspaces",
+      "description": "Top 10 workspaces visited by Fabric users",
+      "visualType": "bar",
+      "pageId": "731f692f-64ac-4606-9183-71d9313a0b38",
+      "layout": {
+        "x": 8,
+        "y": 5,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "e4112015-78bc-4c25-a230-51cd154b4bc5"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "workspaceName",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "e3856a9e-b278-4885-9602-c9695e6511aa",
+      "title": "Interactions by Item Types",
+      "description": "Top 10 item types accessed by Fabric users",
+      "visualType": "pie",
+      "pageId": "731f692f-64ac-4606-9183-71d9313a0b38",
+      "layout": {
+        "x": 8,
+        "y": 0,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "0b439ece-15d3-4055-bf46-4e3ba55cf8f3"
+      },
+      "visualOptions": {
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": true,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "itemKind",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "fdaffd4c-af6f-4275-a872-af8bd9ec8ccb",
+      "title": "Interactions by Fabric Items",
+      "description": "Top 10 artifacts accessed by Fabric users",
+      "visualType": "bar",
+      "pageId": "731f692f-64ac-4606-9183-71d9313a0b38",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 8,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "1c502fac-4858-401c-b342-b4cf4d61bd96"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "log",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": true,
+        "crossFilter": [],
+        "drillthrough": [
+          {
+            "destinationPages": [],
+            "disabled": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "be7b1399-458d-4772-920f-0015482d5e0c",
+      "title": "Common Workspace Actions",
+      "description": "Top 10 workspace events by Fabric users",
+      "visualType": "bar",
+      "pageId": "731f692f-64ac-4606-9183-71d9313a0b38",
+      "layout": {
+        "x": 15,
+        "y": 0,
+        "width": 8,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "21c7f5df-1a33-452e-a676-de2cd44bf482"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "log",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": true,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "065e7481-8f6c-44d8-808e-47f13037a99f",
+      "title": "Top Fabric Users",
+      "description": "Top 10 Fabric Users",
+      "visualType": "table",
+      "pageId": "731f692f-64ac-4606-9183-71d9313a0b38",
+      "layout": {
+        "x": 15,
+        "y": 5,
+        "width": 8,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "9e76172c-55df-4e73-8614-4d5eb758152d"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": false,
+        "colorRulesDisabled": true,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": true,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": []
+      }
+    },
+    {
+      "id": "aa3a766d-ab90-41b3-9d18-d853aa699c9c",
+      "title": "Fabric Job Types",
+      "visualType": "pie",
+      "pageId": "9695ffb1-94f8-4249-ad11-5c9eb5228984",
+      "layout": {
+        "x": 13,
+        "y": 0,
+        "width": 6,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "6ac98e77-95cf-4d74-837c-bf0ae3ab9cce"
+      },
+      "visualOptions": {
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "ec930751-7de9-472f-8ed4-6a9207f124e0",
+      "title": "Fabric Jobs & Duration",
+      "visualType": "bar",
+      "pageId": "9695ffb1-94f8-4249-ad11-5c9eb5228984",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 7,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "2ea13ed9-0b5a-4f80-9eec-f9a6a7fb3a34"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "log",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "itemName",
+        "yColumns": [
+          "avgjobDurationMin",
+          "instanceCount"
+        ],
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "59eef9b9-6cd0-4fbf-92d6-4818ad94808b",
+      "title": "Fabric Trigger Types",
+      "visualType": "pie",
+      "pageId": "9695ffb1-94f8-4249-ad11-5c9eb5228984",
+      "layout": {
+        "x": 7,
+        "y": 0,
+        "width": 6,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "1b93a27f-e5b0-4108-9cdb-21b1b6c94d68"
+      },
+      "visualOptions": {
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "ba23a506-4437-4fe5-9781-939686b8143f",
+      "title": "Jobs by Fabric Workspaces",
+      "visualType": "table",
+      "pageId": "9695ffb1-94f8-4249-ad11-5c9eb5228984",
+      "layout": {
+        "x": 13,
+        "y": 5,
+        "width": 11,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "fedb3caa-2afe-4938-8301-178aea7b5da6"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": false,
+        "colorRulesDisabled": false,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": [
+          {
+            "id": "c58c305f-6524-425a-b060-95ad215e066a",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "rows",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "type",
+                "values": [
+                  "JobSucceeded"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "green",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "table"
+          },
+          {
+            "id": "bc4dc9a3-c173-42ed-9843-b7b26f06f4ef",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "rows",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "type",
+                "values": [
+                  "JobFailed"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "red",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "table"
+          },
+          {
+            "id": "475f7871-4d2b-41e6-a909-a942f97e8357",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "rows",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "type",
+                "values": [
+                  "JobStatusChanged"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "light",
+            "color": "yellow",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "table"
+          }
+        ]
+      }
+    },
+    {
+      "id": "abe7da3c-a014-45e3-8591-78e4f9a299d5",
+      "title": "Schedules UTC",
+      "visualType": "line",
+      "pageId": "9695ffb1-94f8-4249-ad11-5c9eb5228984",
+      "layout": {
+        "x": 19,
+        "y": 0,
+        "width": 5,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "2d278ed5-835d-4735-a29b-1cf97bc37a74"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": "Column1",
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": [],
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "0822212d-365b-4688-990a-b00df05a78d4",
+      "title": "Fabric Job Duration Anomalies",
+      "visualType": "anomalychart",
+      "pageId": "cbdfaab8-dc4d-4a3e-937f-e097cd4dc96a",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "c0aa748e-03e6-43fe-9461-6a2fb6019aca"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "anomalyColumns": [],
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "itemName",
+            "parameterId": "35ff92ed-8497-4fcd-945d-c94dcd7d2b32",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 20
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "298a2883-7457-409b-afd3-995a9c17cf37",
+      "title": "OneLake Daily Interactions",
+      "visualType": "timechart",
+      "pageId": "ae3e4d0f-584c-4681-b4bb-e767ef984e56",
+      "layout": {
+        "x": 0,
+        "y": 5,
+        "width": 14,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "169a4af7-e63f-41b8-935c-c9dd13c83cf4"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "right",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": true,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "type",
+            "parameterId": "f0dc2351-2d93-4e9c-8c48-92ea752d40c6",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": false,
+          "limit": 1
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "1aa69f2d-c056-4c0a-82dc-0aa8d35c5580",
+      "title": "OneLake Lakehouse Tables & Files",
+      "visualType": "table",
+      "pageId": "ae3e4d0f-584c-4681-b4bb-e767ef984e56",
+      "layout": {
+        "x": 14,
+        "y": 0,
+        "width": 10,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "975c1247-74e7-490c-8de1-db62f0125b8d"
+      },
+      "visualOptions": {
+        "table__enableRenderLinks": true,
+        "colorRulesDisabled": false,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "type",
+            "parameterId": "f0dc2351-2d93-4e9c-8c48-92ea752d40c6",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "table__renderLinks": [],
+        "colorRules": [
+          {
+            "id": "c73b1b0f-94ec-49e7-8d1f-79bac5a546ce",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "rows",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "type",
+                "values": [
+                  "FileDeleted"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "light",
+            "color": "red",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "table"
+          },
+          {
+            "id": "d23fc882-863f-4949-98a2-cf4846a2d820",
+            "ruleType": "colorByCondition",
+            "applyToColumn": null,
+            "hideText": false,
+            "applyTo": "rows",
+            "conditions": [
+              {
+                "operator": "==",
+                "column": "type",
+                "values": [
+                  "FolderDeleted"
+                ]
+              }
+            ],
+            "chainingOperator": "and",
+            "colorStyle": "bold",
+            "color": "red",
+            "tag": "",
+            "icon": null,
+            "ruleName": "",
+            "visualType": "table"
+          }
+        ]
+      }
+    },
+    {
+      "id": "4cd061b8-80a5-46fe-bc50-279b424a0f48",
+      "title": "OneLake Actions",
+      "visualType": "pie",
+      "pageId": "ae3e4d0f-584c-4681-b4bb-e767ef984e56",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "beecf507-7af4-49df-bcbb-a90f2873fe9d"
+      },
+      "visualOptions": {
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "type",
+            "parameterId": "f0dc2351-2d93-4e9c-8c48-92ea752d40c6",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "33ba91ba-fa50-4fe8-b56d-cf0697b2a417",
+      "title": "OneLake APIs",
+      "visualType": "pie",
+      "pageId": "ae3e4d0f-584c-4681-b4bb-e767ef984e56",
+      "layout": {
+        "x": 7,
+        "y": 0,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "07e6d097-cdf8-4c33-bfd8-557549365f05"
+      },
+      "visualOptions": {
+        "hideLegend": true,
+        "legendLocation": "bottom",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "labelDisabled": false,
+        "pie__label": [
+          "name",
+          "percentage"
+        ],
+        "tooltipDisabled": false,
+        "pie__tooltip": [
+          "name",
+          "percentage",
+          "value"
+        ],
+        "pie__orderBy": "size",
+        "pie__kind": "pie",
+        "pie__topNSlices": null,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "type",
+            "parameterId": "f0dc2351-2d93-4e9c-8c48-92ea752d40c6",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "17f8f749-45d4-4198-be2d-fb2b5522baab",
+      "title": "Fabric Job Duration Forecast",
+      "visualType": "timechart",
+      "pageId": "cbdfaab8-dc4d-4a3e-937f-e097cd4dc96a",
+      "layout": {
+        "x": 12,
+        "y": 0,
+        "width": 12,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "a4fbac09-2ae8-4d83-a415-cf7534c1a0ee"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "itemName",
+            "parameterId": "35ff92ed-8497-4fcd-945d-c94dcd7d2b32",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 20
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "3b5d2e90-e44a-4f19-afe6-2ac018962bbf",
+      "title": "OneLake Anomalies",
+      "visualType": "anomalychart",
+      "pageId": "4d590f86-8a8f-4af8-9812-2d87d25081da",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 24,
+        "height": 10
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "22ae9614-3c3d-4a78-b026-faa70e5f3844"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "log",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "anomalyColumns": [],
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "itemName",
+            "parameterId": "35ff92ed-8497-4fcd-945d-c94dcd7d2b32",
+            "disabled": false
+          }
+        ],
+        "drillthrough": [],
+        "selectedDataOnLoad": {
+          "all": true,
+          "limit": 20
+        },
+        "dataPointsTooltip": {
+          "all": false,
+          "limit": 1
+        }
+      }
+    },
+    {
+      "id": "82ec4071-f770-4465-9110-11284a1c82ff",
+      "title": "Fabric Jobs by Status",
+      "visualType": "bar",
+      "pageId": "9695ffb1-94f8-4249-ad11-5c9eb5228984",
+      "layout": {
+        "x": 7,
+        "y": 5,
+        "width": 6,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "e800efa8-1cc9-4a21-aa2c-ccc450a9afab"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [
+          {
+            "interaction": "column",
+            "property": "type",
+            "disabled": false
+          }
+        ],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "75ac2972-4c2d-4e81-bd4d-be5933e59f0c",
+      "title": "Regressed Jobs Alert",
+      "visualType": "bar",
+      "pageId": "1da933f9-883a-459b-a6d5-ec4123ff3557",
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "857e9e6c-d896-4a75-bbd3-d819729ad89c"
+      },
+      "description": "Today's regressed jobs compared to last 60 days",
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "seriesColors": {},
+        "forceAxisTicks": false,
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "15794ae4-d8f3-4ef8-8bc0-9c4f0cd3ebb2",
+      "title": "New Users Alert",
+      "visualType": "bar",
+      "pageId": "1da933f9-883a-459b-a6d5-ec4123ff3557",
+      "layout": {
+        "x": 14,
+        "y": 0,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "b217e518-8cbf-45fc-b59e-9a5c68cae2c5"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "log",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "fdae4480-794e-4a72-8c44-bd374d5cc8f1",
+      "title": "Job Anomalies Alert",
+      "description": "Job Anamolies since last 24 hrs",
+      "visualType": "bar",
+      "pageId": "1da933f9-883a-459b-a6d5-ec4123ff3557",
+      "layout": {
+        "x": 7,
+        "y": 0,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "3c3acff0-6208-4c6e-ad60-00a35b87ef1d"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "6fa55e8b-a22e-4d3e-a35b-4b7432d9aa15",
+      "title": "OneLake Anomalies Alert",
+      "description": "OneLake Anamolies since last 24 hrs",
+      "visualType": "bar",
+      "pageId": "1da933f9-883a-459b-a6d5-ec4123ff3557",
+      "layout": {
+        "x": 0,
+        "y": 5,
+        "width": 7,
+        "height": 5
+      },
+      "queryRef": {
+        "kind": "query",
+        "queryId": "74226c0a-c124-46bb-ad83-9327fab992e9"
+      },
+      "visualOptions": {
+        "multipleYAxes": {
+          "base": {
+            "id": "-1",
+            "label": "",
+            "columns": [],
+            "yAxisMaximumValue": null,
+            "yAxisMinimumValue": null,
+            "yAxisScale": "linear",
+            "horizontalLines": []
+          },
+          "additional": [],
+          "showMultiplePanels": false
+        },
+        "hideLegend": false,
+        "legendLocation": "bottom",
+        "xColumnTitle": "",
+        "xColumn": null,
+        "yColumns": null,
+        "seriesColumns": null,
+        "xAxisScale": "linear",
+        "verticalLine": "",
+        "crossFilterDisabled": false,
+        "drillthroughDisabled": false,
+        "crossFilter": [],
+        "drillthrough": []
+      }
+    },
+    {
+      "id": "afada331-62cd-4ed7-99b2-efd1554a902b",
+      "title": "New tile",
+      "visualType": "markdownCard",
+      "pageId": "1da933f9-883a-459b-a6d5-ec4123ff3557",
+      "layout": {
+        "x": 7,
+        "y": 5,
+        "width": 14,
+        "height": 5
+      },
+      "markdownText": "# Add new alerts here...\n",
+      "visualOptions": {}
+    }
+  ],
+  "baseQueries": [],
+  "parameters": [
+    {
+      "kind": "duration",
+      "id": "c095ddbc-5c93-4f7f-b8cf-f1dbc859674c",
+      "displayName": "Time range",
+      "description": "",
+      "beginVariableName": "_startTime",
+      "endVariableName": "_endTime",
+      "defaultValue": {
+        "kind": "dynamic",
+        "count": 30,
+        "unit": "days"
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "731f692f-64ac-4606-9183-71d9313a0b38",
+          "9695ffb1-94f8-4249-ad11-5c9eb5228984",
+          "ae3e4d0f-584c-4681-b4bb-e767ef984e56",
+          "cbdfaab8-dc4d-4a3e-937f-e097cd4dc96a",
+          "4d590f86-8a8f-4af8-9812-2d87d25081da"
+        ]
+      }
+    },
+    {
+      "kind": "string",
+      "id": "f0dc2351-2d93-4e9c-8c48-92ea752d40c6",
+      "displayName": "OneLake Event",
+      "description": "",
+      "variableName": "_type",
+      "selectionType": "array",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "type",
+          "label": "type"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "b260aa68-d663-43a7-ba2f-7d40b558f672"
+        }
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "ae3e4d0f-584c-4681-b4bb-e767ef984e56",
+          "4d590f86-8a8f-4af8-9812-2d87d25081da"
+        ]
+      },
+      "allIsNull": false
+    },
+    {
+      "kind": "string",
+      "id": "35ff92ed-8497-4fcd-945d-c94dcd7d2b32",
+      "displayName": "Jobs",
+      "description": "",
+      "variableName": "_itemName",
+      "selectionType": "scalar",
+      "includeAllOption": true,
+      "defaultValue": {
+        "kind": "all"
+      },
+      "dataSource": {
+        "kind": "query",
+        "columns": {
+          "value": "itemName",
+          "label": "itemName"
+        },
+        "queryRef": {
+          "kind": "query",
+          "queryId": "8e9d692f-7dcf-4df7-9937-60411a9f85ee"
+        },
+        "autoReset": true
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "cbdfaab8-dc4d-4a3e-937f-e097cd4dc96a"
+        ]
+      }
+    },
+    {
+      "kind": "decimal",
+      "selectionType": "freetext",
+      "id": "aa08a35c-cb61-40ee-aaca-65b90456b458",
+      "displayName": "Slope Threshold",
+      "variableName": "_slopeThreshold",
+      "description": "Threshold value of slope when exceeded an activator alert is initiated",
+      "defaultValue": {
+        "kind": "value",
+        "value": "1.0"
+      },
+      "showOnPages": {
+        "kind": "selection",
+        "pageIds": [
+          "1da933f9-883a-459b-a6d5-ec4123ff3557"
+        ]
+      }
+    }
+  ],
+  "dataSources": [
+    {
+      "kind": "kusto-trident",
+      "id": "2505cb77-5a0e-49ed-8f65-9e0b9c774870",
+      "name": "kdb_fabricEvents",
+      "clusterUri": "",
+      "databaseArtifactId": "14ea1177-fe93-4089-97ea-6292b22b1edd",
+      "database": "b22b1edd-6292-97ea-4089-fe9314ea1177",
+      "workspace": "00000000-0000-0000-0000-000000000000"
+    }
+  ],
+  "pages": [
+    {
+      "name": "Workspace",
+      "id": "731f692f-64ac-4606-9183-71d9313a0b38"
+    },
+    {
+      "name": "Jobs",
+      "id": "9695ffb1-94f8-4249-ad11-5c9eb5228984"
+    },
+    {
+      "name": "OneLake",
+      "id": "ae3e4d0f-584c-4681-b4bb-e767ef984e56"
+    },
+    {
+      "name": "Job Anomalies",
+      "id": "cbdfaab8-dc4d-4a3e-937f-e097cd4dc96a"
+    },
+    {
+      "name": "OneLake Anomalies",
+      "id": "4d590f86-8a8f-4af8-9812-2d87d25081da"
+    },
+    {
+      "name": "Alerts",
+      "id": "1da933f9-883a-459b-a6d5-ec4123ff3557"
+    }
+  ],
+  "queries": [
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view('dailyAggWorkspaceEvents')\n|where ['time'] between (_startTime .. _endTime )\n|summarize visits = sum(eventCount) by workspaceName\n|sort by visits desc \n|take 10",
+      "id": "e4112015-78bc-4c25-a230-51cd154b4bc5",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggWorkspaceEvents\")\n|where [\"time\"] between (_startTime .._endTime )\n|summarize visits = sum(eventCount) by itemKind\n|sort by visits desc nulls first  \n|take 10",
+      "id": "0b439ece-15d3-4055-bf46-4e3ba55cf8f3",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggWorkspaceEvents\")\n|where [\"time\"] between (_startTime .._endTime )\n|summarize visits = sum(eventCount) by itemName, itemKind\n|sort by visits desc nulls first",
+      "id": "1c502fac-4858-401c-b342-b4cf4d61bd96",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggWorkspaceEvents\")\n|where [\"time\"] between (_startTime .._endTime )\n|extend shortType = replace_string(type,\"Microsoft.Fabric.Item\",\"\")\n|summarize visits = sum(eventCount) by shortType\n|sort by visits desc nulls first",
+      "id": "21c7f5df-1a33-452e-a676-de2cd44bf482",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggWorkspaceEvents\")\n|where [\"time\"] between (_startTime .._endTime )\n|summarize visits = sum(eventCount) by executingPrincipalId, executingPrincipalType\n|sort by visits desc nulls first",
+      "id": "9e76172c-55df-4e73-8614-4d5eb758152d",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view('dailyAggJobEvents')\n|where [\"time\"] between (_startTime .._endTime ) and jobStatus == 'Completed'\n|summarize jobs = count() by jobType",
+      "id": "6ac98e77-95cf-4d74-837c-bf0ae3ab9cce",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view('dailyAggJobEvents')\n| where [\"time\"] between (_startTime .._endTime ) and jobStatus == \"Completed\"\n| extend jobDurationMin = datetime_diff('minute', jobEndTimeUtc,jobCreatedTimeUtc)\n| summarize avgjobDurationMin =round(avg(jobDurationMin)),\n            instanceCount = count() by itemName\n",
+      "id": "2ea13ed9-0b5a-4f80-9eec-f9a6a7fb3a34",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view('dailyAggJobEvents')\n| where [\"time\"] between (_startTime .._endTime ) and jobStatus == \"Completed\"\n| summarize jobCount = count() by jobInvokeType\n\n",
+      "id": "1b93a27f-e5b0-4108-9cdb-21b1b6c94d68",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "jobEventsExpanded\n|where [\"time\"] between (_startTime .. _endTime)\n| summarize jobCount = count() by type= replace_string(type,\"Microsoft.Fabric.JobEvents.Item\",\"\"), workspaceName, itemName\n| order by jobCount desc nulls last \n",
+      "id": "fedb3caa-2afe-4938-8301-178aea7b5da6",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggJobEvents\")\n|where [\"time\"] between (_startTime.._endTime)\n| summarize  jobcount= count() by bin(datetime_part('hour',jobScheduleTimeUtc), 1), itemName\n",
+      "id": "2d278ed5-835d-4735-a29b-1cf97bc37a74",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "let span = 1d;\nmaterialized_view(\"dailyAggJobEvents\")\n| where [\"time\"] between (_startTime .._endTime ) and isnotempty(itemName)\n| where itemName in (_itemName) or   isempty( _itemName)\n| extend jobDurationMin = datetime_diff('minute',jobEndTimeUtc,jobStartTimeUtc)\n| make-series tsDurationMin = avg(jobDurationMin) default=int(null) on [\"time\"] from _startTime to _endTime step span by itemName\n| extend tsDurationMin = series_fill_linear(tsDurationMin) //fill missing null values with linear interpolation\n| extend (anamolies, score,baseline) = series_decompose_anomalies(tsDurationMin,1.5,-1,\"linefit\")\n| project itemName,tsDurationMin, anamolies,[\"time\"]",
+      "id": "c0aa748e-03e6-43fe-9461-6a2fb6019aca",
+      "usedVariables": [
+        "_endTime",
+        "_itemName",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggStorageEvents\")\n| where [\"time\"] between (_startTime .. _endTime)\n| where type in (_type) or isempty( _type)\n| summarize count = count() by bin([\"time\"],1d), type",
+      "id": "169a4af7-e63f-41b8-935c-c9dd13c83cf4",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "_type"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggStorageEvents\")\n| where [\"time\"] between (_startTime.._endTime)\n| where type in (_type) or isempty( _type)\n| summarize count = sum(oneLakeCount) by type, subject\n|order by  count desc ",
+      "id": "975c1247-74e7-490c-8de1-db62f0125b8d",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "_type"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggStorageEvents\")\n| where [\"time\"] between (_startTime.._endTime)\n| where type in (_type) or isempty( _type)\n// | extend shortType = replace_string(type,\"Microsoft.Fabric.OneLake.\",\"\")\n| summarize count = sum(oneLakeCount) by type\n",
+      "id": "beecf507-7af4-49df-bcbb-a90f2873fe9d",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "_type"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggStorageEvents\")\n| where [\"time\"] between (_startTime.._endTime)\n| where type in (_type) or isempty( _type)\n| summarize count = sum(oneLakeCount) by api, type\n",
+      "id": "07e6d097-cdf8-4c33-bfd8-557549365f05",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "_type"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "let span = 1d;\nlet horizon = 14d;\nmaterialized_view(\"dailyAggJobEvents\")\n| where [\"time\"] between (_startTime .._endTime ) and isnotnull(itemName)\n| where itemName in (_itemName) or isempty( _itemName)\n| extend jobDurationMin = datetime_diff('minute',jobEndTimeUtc,jobStartTimeUtc)\n| make-series tsJobDurationMin = avg(jobDurationMin) default=int(null) on [\"time\"] from _startTime to _endTime+horizon step span by itemName\n| extend tsJobDurationMin = series_fill_linear(tsJobDurationMin) // fill missing null values with interpolated data\n| extend forecast = series_decompose_forecast(tsJobDurationMin,toint(horizon/span),-1,\"linefit\")",
+      "id": "a4fbac09-2ae8-4d83-a415-cf7534c1a0ee",
+      "usedVariables": [
+        "_endTime",
+        "_itemName",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "let span = 1d;\nmaterialized_view(\"dailyAggStorageEvents\")\n| where [\"time\"] between (_startTime .._endTime )\n| where type in (_type) or isempty( _type)\n| make-series tsCount = count() default=int(null) on [\"time\"] from _startTime to _endTime step span by type\n| extend tsCount = series_fill_linear(tsCount) // replace missing null values with interpolated data\n| extend (anamolies, score,baseline) = series_decompose_anomalies(tsCount,1.5,-1,\"linefit\")\n|project tsCount,anamolies, type, [\"time\"]\n",
+      "id": "22ae9614-3c3d-4a78-b026-faa70e5f3844",
+      "usedVariables": [
+        "_endTime",
+        "_startTime",
+        "_type"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "jobEventsExpanded\n| where [\"time\"] between (_startTime .._endTime ) \n| summarize jobCount = count() by type = replace_string(type,\"Microsoft.Fabric.JobEvents.Item\",\"\")\n\n",
+      "id": "e800efa8-1cc9-4a21-aa2c-ccc450a9afab",
+      "usedVariables": [
+        "_endTime",
+        "_startTime"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "let minTs = now()-365d; //last n days\nlet maxTs = now(); \nmaterialized_view(\"dailyAggJobEvents\")\n| where [\"time\"] between (minTs ..maxTs) and isnotempty( itemName) \n| extend jobDurationMin = datetime_diff('minute',jobEndTimeUtc,jobStartTimeUtc)\n| make-series tsJobDurationMin = avg(jobDurationMin) default= long(null) on [\"time\"] from minTs to maxTs step 1d by itemName\n| extend tsJobDurationMin = series_fill_linear(tsJobDurationMin) // replace null values with interpolated data\n| extend (rsquare, slope) = series_fit_line(tsJobDurationMin)\n| project itemName, slope\n| where slope>_slopeThreshold\n| order by slope desc",
+      "id": "857e9e6c-d896-4a75-bbd3-d819729ad89c",
+      "usedVariables": [
+        "_slopeThreshold"
+      ]
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "let minTs = toscalar(materialized_view(\"dailyAggJobEvents\")|summarize minTs = min([\"time\"]));\nlet allUsers = materialized_view(\"dailyAggJobEvents\")\n            |where [\"time\"] between (minTs ..now()-7d )\n            |distinct executingPrincipalId, executingPrincipalType;\nlet yesterdayUsers = materialized_view(\"dailyAggJobEvents\")\n            |where [\"time\"] between (now()-7d..now() )\n            |distinct executingPrincipalId, executingPrincipalType;            \nallUsers\n| join kind=rightanti yesterdayUsers on executingPrincipalId, executingPrincipalType\n|summarize userCount = count() by executingPrincipalId, executingPrincipalType\n\n\n",
+      "id": "b217e518-8cbf-45fc-b59e-9a5c68cae2c5",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "let span = 1d;\nlet minTs = now()-1d;\nlet maxTs = now();\nmaterialized_view(\"dailyAggJobEvents\")\n| where [\"time\"] between (minTs..maxTs) and isnotempty(itemName)\n| extend jobDurationMin = datetime_diff('minute',jobEndTimeUtc,jobStartTimeUtc)\n| make-series tsDurationMin = avg(jobDurationMin) default=int(null) on [\"time\"] from minTs to maxTs step span by itemName\n| extend tsDurationMin = series_fill_linear(tsDurationMin) //fill missing null values with linear interpolation\n| extend (anamolies, score,baseline) = series_decompose_anomalies(tsDurationMin,1.5,-1,\"linefit\")\n| where isnotnull(anamolies) and array_index_of( anamolies,1) !=-1\n| summarize jobcount = count() by itemName",
+      "id": "3c3acff0-6208-4c6e-ad60-00a35b87ef1d",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "let span = 1d;\nlet minTs = now()-1d;\nlet maxTs = now();\nmaterialized_view(\"dailyAggStorageEvents\")\n| where [\"time\"] between (minTs..maxTs) and isnotempty(type)\n| make-series tsCount = count() default=int(null) on [\"time\"] from minTs to maxTs step span by type\n| extend tsCount = series_fill_linear(tsCount) // replace missing null values with interpolated data\n| extend (anamolies, score,baseline) = series_decompose_anomalies(tsCount,1.5,-1,\"linefit\")\n| where isnotnull(anamolies) and array_index_of( anamolies,1) !=-1\n| summarize count = count() by type\n\n\n\n",
+      "id": "74226c0a-c124-46bb-ad83-9327fab992e9",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggStorageEvents\")\n|distinct type\n|order by type asc ",
+      "id": "b260aa68-d663-43a7-ba2f-7d40b558f672",
+      "usedVariables": []
+    },
+    {
+      "dataSource": {
+        "kind": "inline",
+        "dataSourceId": "2505cb77-5a0e-49ed-8f65-9e0b9c774870"
+      },
+      "text": "materialized_view(\"dailyAggJobEvents\")\n|where isnotnull(itemName)\n|distinct itemName\n|order by itemName asc ",
+      "id": "8e9d692f-7dcf-4df7-9937-60411a9f85ee",
+      "usedVariables": []
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "wwi-elt-framework"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "be7ff152-6e10-453e-be6d-7aeed4ed4b26"
+  }
+}

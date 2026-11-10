@@ -1,0 +1,940 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "name": "Set RunID",
+        "type": "SetVariable",
+        "dependsOn": [],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "RunID",
+          "value": {
+            "value": "@pipeline().RunId",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Level1 Transform RUNNING",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "Set RunID",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[ELT].[UpdateTransformInstance_L1]",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "storedProcedureParameters": {
+            "L1TransformADFPipelineRunID": {
+              "value": {
+                "value": "@variables('RunID')",
+                "type": "Expression"
+              },
+              "type": "Guid"
+            },
+            "L1TransformInstanceId": {
+              "value": {
+                "value": "@pipeline().parameters.L1TransformInstanceID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformStatus": {
+              "value": "Running",
+              "type": "String"
+            },
+            "MaxRetries": {
+              "value": {
+                "value": "@pipeline().parameters.MaxRetries",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      },
+      {
+        "name": "Level 1 Transform Notebook",
+        "type": "TridentNotebook",
+        "dependsOn": [
+          {
+            "activity": "Level1 Transform RUNNING",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "notebookId": {
+            "value": "@pipeline().parameters.ComputeName",
+            "type": "Expression"
+          },
+          "parameters": {
+            "L1TransformInstanceID": {
+              "value": {
+                "value": "@pipeline().parameters.L1TransformInstanceID",
+                "type": "Expression"
+              },
+              "type": "int"
+            },
+            "L1TransformID": {
+              "value": {
+                "value": "@pipeline().parameters.L1TransformID",
+                "type": "Expression"
+              },
+              "type": "int"
+            },
+            "IngestID": {
+              "value": {
+                "value": "@pipeline().parameters.IngestID",
+                "type": "Expression"
+              },
+              "type": "int"
+            },
+            "CustomParameters": {
+              "value": {
+                "value": "@pipeline().parameters.CustomParameters",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "InputRawFileSystem": {
+              "value": {
+                "value": "@pipeline().parameters.InputRawFileSystem",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "InputRawFileFolder": {
+              "value": {
+                "value": "@pipeline().parameters.InputRawFileFolder",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "InputRawFile": {
+              "value": {
+                "value": "@pipeline().parameters.InputRawFile",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "InputRawFileDelimiter": {
+              "value": {
+                "value": "@pipeline().parameters.InputRawFileDelimiter",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "InputFileHeaderFlag": {
+              "value": {
+                "value": "@pipeline().parameters.InputFileHeaderFlag",
+                "type": "Expression"
+              },
+              "type": "bool"
+            },
+            "OutputL1CurateFileSystem": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL1CurateFileSystem",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputL1CuratedFolder": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL1CuratedFolder",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputL1CuratedFile": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL1CuratedFile",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputL1CuratedFileDelimiter": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL1CuratedFileDelimiter",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputL1CuratedFileFormat": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL1CuratedFileFormat",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputL1CuratedFileWriteMode": {
+              "value": {
+                "value": "@pipeline().parameters.OutputL1CuratedFileWriteMode",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputDWStagingTable": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWStagingTable",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "LookupColumns": {
+              "value": {
+                "value": "@pipeline().parameters.LookupColumns",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputDWTable": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWTable",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "OutputDWTableWriteMode": {
+              "value": {
+                "value": "@pipeline().parameters.OutputDWTableWriteMode",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "ReRunL1TransformFlag": {
+              "value": {
+                "value": "@pipeline().parameters.ReRunL1TransformFlag",
+                "type": "Expression"
+              },
+              "type": "bool"
+            },
+            "DeltaName": {
+              "value": {
+                "value": "@pipeline().parameters.WatermarkColName",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "InputRawTable": {
+              "value": {
+                "value": "@pipeline().parameters.InputRawTable",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "DataFromTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataFromTimestamp",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "DataToTimestamp": {
+              "value": {
+                "value": "@pipeline().parameters.DataToTimestamp",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          },
+          "sessionTag": {
+            "value": "@replace(replace(pipeline().parameters.ComputeName,'-','_'),' ','')",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Level 1 Transform SUCCESS",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "ForEach Level 2 Config",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[ELT].[UpdateTransformInstance_L1]",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "storedProcedureParameters": {
+            "IngestCount": {
+              "value": {
+                "value": "@variables('numSourceRows')",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformADFPipelineRunID": {
+              "value": {
+                "value": "@variables('RunID')",
+                "type": "Expression"
+              },
+              "type": "Guid"
+            },
+            "L1TransformInsertCount": {
+              "value": {
+                "value": "@variables('numTargetRowsInserted')",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformInstanceId": {
+              "value": {
+                "value": "@pipeline().parameters.L1TransformInstanceID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformStatus": {
+              "value": "Success",
+              "type": "String"
+            },
+            "MaxRetries": {
+              "value": {
+                "value": "@pipeline().parameters.MaxRetries",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformUpdateCount": {
+              "value": {
+                "value": "@variables('numTargetRowsUpdated')",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformDeleteCount": {
+              "value": {
+                "value": "@variables('numTargetRowsDeleted')",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      },
+      {
+        "name": "Set numTargetRowsInserted",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "Level 1 Transform Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "numTargetRowsInserted",
+          "value": {
+            "value": "@string(json(activity('Level 1 Transform Notebook').output.result.exitValue).numTargetRowsInserted)",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Set numSourceRows",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "Level 1 Transform Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "numSourceRows",
+          "value": {
+            "value": "@string(json(activity('Level 1 Transform Notebook').output.result.exitValue).numSourceRows)",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Set numTargetRowsUpdated",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "Level 1 Transform Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "numTargetRowsUpdated",
+          "value": {
+            "value": "@string(json(activity('Level 1 Transform Notebook').output.result.exitValue).numTargetRowsUpdated)",
+            "type": "Expression"
+          }
+        }
+      },
+      {
+        "name": "Get Level 2 Transform Config",
+        "type": "Lookup",
+        "dependsOn": [
+          {
+            "activity": "Set numTargetRowsInserted",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Set numSourceRows",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Set numTargetRowsUpdated",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Set numTargetRowsDeleted",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderStoredProcedureName": "[ELT].[GetTransformDefinition_L2]",
+            "storedProcedureParameters": {
+              "IngestID": {
+                "type": "Int32",
+                "value": {
+                  "value": "@pipeline().parameters.IngestID",
+                  "type": "Expression"
+                }
+              }
+            },
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "firstRowOnly": false,
+          "datasetSettings": {
+            "annotations": [],
+            "type": "AzureSqlTable",
+            "schema": [],
+            "typeProperties": {
+              "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+            },
+            "externalReferences": {
+              "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+            }
+          }
+        }
+      },
+      {
+        "name": "ForEach Level 2 Config",
+        "type": "ForEach",
+        "dependsOn": [
+          {
+            "activity": "Get Level 2 Transform Config",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Get Level 2 Transform Config').output.value",
+            "type": "Expression"
+          },
+          "isSequential": true,
+          "activities": [
+            {
+              "name": "Instantiate Level 2 Transform",
+              "type": "SqlServerStoredProcedure",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "storedProcedureName": "[ELT].[InsertTransformInstance_L2]",
+                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+                "storedProcedureParameters": {
+                  "CustomParameters": {
+                    "value": {
+                      "value": "@item().CustomParameters",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "DataFromNumber": {
+                    "value": {
+                      "value": "@item().DataFromNumber",
+                      "type": "Expression"
+                    },
+                    "type": "Int32"
+                  },
+                  "DataFromTimestamp": {
+                    "value": {
+                      "value": "@item().DataFromTimestamp",
+                      "type": "Expression"
+                    },
+                    "type": "DateTime"
+                  },
+                  "DataToNumber": {
+                    "value": {
+                      "value": "@item().DataToNumber",
+                      "type": "Expression"
+                    },
+                    "type": "Int32"
+                  },
+                  "DataToTimestamp": {
+                    "value": {
+                      "value": "@item().DataToTimestamp",
+                      "type": "Expression"
+                    },
+                    "type": "DateTime"
+                  },
+                  "WatermarkColName": {
+                    "value": {
+                      "value": "@item().WatermarkColName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "IngestADFPipelineRunID": {
+                    "value": {
+                      "value": "@variables('RunID')",
+                      "type": "Expression"
+                    },
+                    "type": "Guid"
+                  },
+                  "IngestID": {
+                    "value": {
+                      "value": "@item().IngestID",
+                      "type": "Expression"
+                    },
+                    "type": "Int32"
+                  },
+                  "InputDWTable": {
+                    "value": {
+                      "value": "@item().InputDWTable",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "InputFile": {
+                    "value": {
+                      "value": "@item().InputFile",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "InputFileDelimiter": {
+                    "value": {
+                      "value": "@item().InputFileDelimiter",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "InputFileFolder": {
+                    "value": {
+                      "value": "@item().InputFileFolder",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "InputFileHeaderFlag": {
+                    "value": {
+                      "value": "@item().InputFileHeaderFlag",
+                      "type": "Expression"
+                    },
+                    "type": "Boolean"
+                  },
+                  "InputFileSystem": {
+                    "value": {
+                      "value": "@item().InputFileSystem",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "L1TransformADFPipelineRunID": {
+                    "value": {
+                      "value": "@variables('RunID')",
+                      "type": "Expression"
+                    },
+                    "type": "Guid"
+                  },
+                  "L1TransformID": {
+                    "value": {
+                      "value": "@item().L1TransformID",
+                      "type": "Expression"
+                    },
+                    "type": "Int32"
+                  },
+                  "L2TransformID": {
+                    "value": {
+                      "value": "@item().L2TransformID",
+                      "type": "Expression"
+                    },
+                    "type": "Int32"
+                  },
+                  "LookupColumns": {
+                    "value": {
+                      "value": "@item().LookupColumns",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "MaxRetries": {
+                    "value": {
+                      "value": "@item().MaxRetries",
+                      "type": "Expression"
+                    },
+                    "type": "Int32"
+                  },
+                  "ComputeName": {
+                    "value": {
+                      "value": "@item().ComputeName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "ComputePath": {
+                    "value": {
+                      "value": "@item().ComputePath",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputDWStagingTable": {
+                    "value": {
+                      "value": "@item().OutputDWStagingTable",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputDWTable": {
+                    "value": {
+                      "value": "@item().OutputDWTable",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputDWTableWriteMode": {
+                    "value": {
+                      "value": "@item().OutputDWTableWriteMode",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputL2CuratedFile": {
+                    "value": {
+                      "value": "@item().OutputL2CuratedFile",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputL2CuratedFileDelimiter": {
+                    "value": {
+                      "value": "@item().OutputL2CuratedFileDelimiter",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputL2CuratedFileFormat": {
+                    "value": {
+                      "value": "@item().OutputL2CuratedFileFormat",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputL2CuratedFileWriteMode": {
+                    "value": {
+                      "value": "@item().OutputL2CuratedFileWriteMode",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputL2CuratedFolder": {
+                    "value": {
+                      "value": "@item().OutputL2CuratedFolder",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "OutputL2CurateFileSystem": {
+                    "value": {
+                      "value": "@item().OutputL2CurateFileSystem",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  }
+                }
+              },
+              "externalReferences": {
+                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Level 1 Transform FAILURE",
+        "type": "SqlServerStoredProcedure",
+        "dependsOn": [
+          {
+            "activity": "Level 1 Transform Notebook",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "storedProcedureName": "[ELT].[UpdateTransformInstance_L1]",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "storedProcedureParameters": {
+            "L1TransformADFPipelineRunID": {
+              "value": {
+                "value": "@variables('RunID')",
+                "type": "Expression"
+              },
+              "type": "Guid"
+            },
+            "L1TransformInstanceId": {
+              "value": {
+                "value": "@pipeline().parameters.L1TransformInstanceID",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "L1TransformStatus": {
+              "value": "Failure",
+              "type": "String"
+            },
+            "MaxRetries": {
+              "value": {
+                "value": "@pipeline().parameters.MaxRetries",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            }
+          }
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      },
+      {
+        "name": "Set numTargetRowsDeleted",
+        "type": "SetVariable",
+        "dependsOn": [
+          {
+            "activity": "Level 1 Transform Notebook",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "variableName": "numTargetRowsDeleted",
+          "value": {
+            "value": "@string(json(activity('Level 1 Transform Notebook').output.result.exitValue).numTargetRowsDeleted)",
+            "type": "Expression"
+          }
+        }
+      }
+    ],
+    "parameters": {
+      "L1TransformInstanceID": {
+        "type": "int",
+        "defaultValue": 2
+      },
+      "L1TransformID": {
+        "type": "int",
+        "defaultValue": 21
+      },
+      "IngestID": {
+        "type": "int",
+        "defaultValue": 21
+      },
+      "ComputeName": {
+        "type": "string"
+      },
+      "ComputePath": {
+        "type": "string"
+      },
+      "CustomParameters": {
+        "type": "string"
+      },
+      "InputRawFileSystem": {
+        "type": "string",
+        "defaultValue": "Files"
+      },
+      "InputRawFileFolder": {
+        "type": "string",
+        "defaultValue": "raw-bronze/wwi/Sales/Orders/2013-01"
+      },
+      "InputRawFile": {
+        "type": "string",
+        "defaultValue": "Sales_Orders_2013-01-01_000000.parquet"
+      },
+      "InputRawFileDelimiter": {
+        "type": "string"
+      },
+      "InputFileHeaderFlag": {
+        "type": "bool"
+      },
+      "OutputL1CurateFileSystem": {
+        "type": "string"
+      },
+      "OutputL1CuratedFolder": {
+        "type": "string"
+      },
+      "OutputL1CuratedFile": {
+        "type": "string"
+      },
+      "OutputL1CuratedFileDelimiter": {
+        "type": "string"
+      },
+      "OutputL1CuratedFileFormat": {
+        "type": "string"
+      },
+      "OutputL1CuratedFileWriteMode": {
+        "type": "string"
+      },
+      "OutputDWStagingTable": {
+        "type": "string"
+      },
+      "LookupColumns": {
+        "type": "string",
+        "defaultValue": "OrderID"
+      },
+      "OutputDWTable": {
+        "type": "string",
+        "defaultValue": "silver.sales_orders"
+      },
+      "OutputDWTableWriteMode": {
+        "type": "string",
+        "defaultValue": "append"
+      },
+      "ReRunL1TransformFlag": {
+        "type": "bool",
+        "defaultValue": false
+      },
+      "MaxRetries": {
+        "type": "int",
+        "defaultValue": 3
+      },
+      "WatermarkColName": {
+        "type": "string",
+        "defaultValue": "LastEditedWhen"
+      },
+      "SilverObjectID": {
+        "type": "string"
+      },
+      "SilverWorkspaceID": {
+        "type": "string"
+      },
+      "InputRawTable": {
+        "type": "string"
+      },
+      "DataFromTimestamp": {
+        "type": "string"
+      },
+      "DataToTimestamp": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "RunID": {
+        "type": "String"
+      },
+      "numSourceRows": {
+        "type": "String",
+        "defaultValue": "0"
+      },
+      "numTargetRowsInserted": {
+        "type": "String",
+        "defaultValue": "0"
+      },
+      "numTargetRowsUpdated": {
+        "type": "String",
+        "defaultValue": "0"
+      },
+      "numTargetRowsDeleted": {
+        "type": "String",
+        "defaultValue": "0"
+      }
+    }
+  }
+}

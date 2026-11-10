@@ -1,0 +1,113 @@
+// KQL script
+// Use management commands in this script to configure your database items, such as tables, functions, materialized views, and more.
+
+
+.create-merge table storageEvents (id:string, datacontenttype:string, specversion:string, source:string, ['time']:datetime, subject:string, dataschemaversion:string, type:string, data:dynamic, EventProcessedUtcTime:datetime, PartitionId:long, EventEnqueuedUtcTime:datetime) 
+.create-merge table jobEvents (id:string, datacontenttype:string, specversion:string, source:string, ['time']:datetime, subject:string, dataschemaversion:string, type:string, data:dynamic, EventProcessedUtcTime:datetime, PartitionId:long, EventEnqueuedUtcTime:datetime) with (docstring = "Raw/bronze table for Fabric Job Events data") 
+.create-merge table workspaceEvents (id:string, datacontenttype:string, specversion:string, source:string, ['time']:datetime, subject:string, dataschemaversion:string, type:string, data:dynamic, EventProcessedUtcTime:datetime, PartitionId:long, EventEnqueuedUtcTime:datetime) 
+.create-merge table jobEventsExpanded (id:string, EventProcessedUtcTime:datetime, datacontenttype:string, specversion:string, source:string, ['time']:datetime, subject:string, dataschemaversion:string, type:string, PartitionId:long, EventEnqueuedUtcTime:datetime, itemId:string, itemName:string, workspaceId:string, workspaceName:string, itemKind:string, executingPrincipalId:string, executingPrincipalType:string, jobInstanceId:string, jobType:string, jobInvokeType:string, jobStatus:string, jobStartTimeUtc:datetime, jobEndTimeUtc:datetime, jobScheduleTimeUtc:datetime, jobDefinitionObjectId:datetime, jobDurationSeconds:long) 
+.create-merge table storageEventsExpanded (id:string, EventProcessedUtcTime:datetime, datacontenttype:string, specversion:string, source:string, ['time']:datetime, subject:string, dataschemaversion:string, type:string, PartitionId:long, EventEnqueuedUtcTime:datetime, api:string, clientRequestId:string, requestId:string, eTag:string, blobUrl:string, url:string, sequencer:string) 
+.create-merge table workspaceEventsExpanded (id:string, EventProcessedUtcTime:datetime, datacontenttype:string, specversion:string, source:string, ['time']:datetime, subject:string, dataschemaversion:string, type:string, PartitionId:long, EventEnqueuedUtcTime:datetime, itemId:string, itemName:string, workspaceId:string, workspaceName:string, itemKind:string, executingPrincipalId:string, executingPrincipalType:string) 
+.create-or-alter function with (docstring = "Function called on JobEvents update policy to flatten/expand JSON data", skipvalidation = "true") expandJobEvents() {
+        jobEvents
+        |extend jd = parse_json(data)
+        |extend itemId = tostring(jd.itemId),
+                itemName = tostring(jd.itemName),
+                workspaceId = tostring(jd.workspaceId),
+                workspaceName = tostring(jd.workspaceName),
+                itemKind = tostring(jd.itemKind),
+                executingPrincipalId = tostring(jd.executingPrincipalId),
+                executingPrincipalType = tostring(jd.executingPrincipalType),
+                jobInstanceId = tostring(jd.jobInstanceId),
+                jobType = tostring(jd.jobType),
+                jobInvokeType = tostring(jd.jobInvokeType),
+                jobStatus = tostring(jd.jobStatus),
+                jobStartTimeUtc = todatetime(jd.jobStartTimeUtc),
+                jobEndTimeUtc = todatetime(jd.jobEndTimeUtc),
+                jobScheduleTimeUtc = todatetime(jd.jobScheduleTimeUtc),
+                jobDefinitionObjectId = todatetime(jd.jobDefinitionObjectId),
+                jobDurationSeconds = tolong(datetime_diff('second',todatetime(jd.jobEndTimeUtc),todatetime(jd.jobStartTimeUtc)))
+        |summarize arg_max(EventProcessedUtcTime,*) by id //deduplicate
+        |project-away jd,data
+    }
+.create-or-alter function with (docstring = "Function called on workspaceEvents update policy to flatten/expand JSON data", skipvalidation = "true") expandWorkspaceEvents() {
+        workspaceEvents
+        | extend ed = parse_json(data)
+        | extend itemId = tostring(ed.itemId),
+                itemName = tostring(ed.itemName),
+                workspaceId = tostring(ed.workspaceId),
+                workspaceName = tostring(ed.workspaceName),
+                itemKind = tostring(ed.itemKind),
+                executingPrincipalId = tostring(ed.executingPrincipalId),
+                executingPrincipalType =  tostring(ed.executingPrincipalType)
+        | summarize arg_max(EventProcessedUtcTime,*) by id //deduplicate
+        | project-away ed, data
+    }
+.create-or-alter function with (docstring = "Function called on storageEvents update policy to flatten/expand JSON data", skipvalidation = "true") expandStorageEvents() {
+        storageEvents
+        | extend sd = parse_json(data)
+        | extend api = tostring(sd.api),
+                clientRequestId = tostring(sd.clientRequestId),
+                requestId = tostring(sd.requestId),
+                eTag = tostring(sd.eTag),
+                blobUrl = tostring(sd.blobUrl),
+                url = tostring(sd.url),
+                sequencer = tostring(sd.sequencer)
+        | summarize arg_max(EventProcessedUtcTime,*) by id //deduplicate
+        | project-away sd, data
+    }
+.create-or-alter materialized-view  dailyAggWorkspaceEvents on table workspaceEventsExpanded { workspaceEventsExpanded
+        |summarize  eventCount= count() by bin(["time"],1d),
+         type,
+         itemKind,
+         itemName,
+         workspaceName,
+         executingPrincipalId,
+         executingPrincipalType }
+.create-or-alter materialized-view  dailyAggJobEvents on table jobEventsExpanded { jobEventsExpanded
+        |project-away id, EventProcessedUtcTime,datacontenttype,specversion,source, dataschemaversion, PartitionId, EventEnqueuedUtcTime,
+                    itemId,workspaceId,jobDefinitionObjectId
+        |extend shortType = replace_string(type,"Microsoft.Fabric.JobEvents.","")
+        | evaluate pivot(shortType,max(jobStartTimeUtc))
+                        : (["time"]:datetime,
+                        subject:string,
+                        type:string,
+                        itemName:string,
+                        workspaceName:string,
+                        itemKind:string,
+                        executingPrincipalId:string,
+                        executingPrincipalType:string,
+                        jobInstanceId:string,
+                        jobType:string,
+                        jobInvokeType:string,
+                        jobStatus:string,
+                        jobEndTimeUtc:datetime,
+                        jobScheduleTimeUtc:datetime,
+                        jobDurationSeconds:long,
+                        ItemJobCreated:datetime,
+                        ItemJobStatusChanged:datetime,
+                        ItemJobSucceeded:datetime)
+        | summarize arg_max(["time"],jobStatus),
+                jobScheduleTimeUtc = max(jobScheduleTimeUtc),
+                jobCreatedTimeUtc= max(ItemJobCreated),
+                jobStartTimeUtc = max(ItemJobSucceeded),
+                jobEndTimeUtc = max(jobEndTimeUtc)
+                by subject,
+                itemName,
+                workspaceName,
+                itemKind,
+                jobType,
+                executingPrincipalId,
+                executingPrincipalType,
+                jobInvokeType,
+                jobInstanceId }
+.create-or-alter materialized-view  dailyAggStorageEvents on table storageEventsExpanded { storageEventsExpanded
+        | extend type = replace_string(type,"Microsoft.Fabric.OneLake.","")
+        | summarize oneLakeCount = count() by bin(["time"],1d),
+            source,
+            subject,
+            type,
+            api }
+.alter table jobEventsExpanded policy update "[{\"IsEnabled\":true,\"Source\":\"jobEvents\",\"Query\":\"expandJobEvents()\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table storageEventsExpanded policy update "[{\"IsEnabled\":true,\"Source\":\"storageEvents\",\"Query\":\"expandStorageEvents()\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"
+.alter table workspaceEventsExpanded policy update "[{\"IsEnabled\":true,\"Source\":\"workspaceEvents\",\"Query\":\"expandWorkspaceEvents()\",\"IsTransactional\":false,\"PropagateIngestionProperties\":false,\"ManagedIdentity\":null}]"

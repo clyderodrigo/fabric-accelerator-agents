@@ -1,0 +1,14 @@
+{
+  "name": "fabric-accelerator-agents",
+  "owner": {
+    "name": "Fabric Accelerator maintainers"
+  },
+  "plugins": [
+    {
+      "name": "fabric-accelerator-agents",
+      "source": "./adapters/claude-code",
+      "description": "Guide-and-verify deployment of Microsoft Fabric environments with official MCP servers, read-only subagents and generated guardrails.",
+      "version": "0.1.0"
+    }
+  ]
+}

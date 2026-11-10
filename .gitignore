@@ -1,0 +1,19 @@
+# Editor and OS noise
+.DS_Store
+Thumbs.db
+*.log
+
+# Node
+node_modules/
+
+# Local Claude Code state. settings.json is committed; settings.local.json is not.
+.claude/settings.local.json
+
+# Local OpenCode state
+.opencode/state/
+opencode.local.json
+
+# Local environment values. Never commit a token or a declared-environment file with real IDs.
+fabric/declared-environment.local.yaml
+.env
+.env.*

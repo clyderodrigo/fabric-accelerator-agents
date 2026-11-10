@@ -1,0 +1,6 @@
+CREATE USER [bennyaustin@microsoft.com]
+    WITH SID = 0xC8D78A68BBD7324F884A05601C9762A2, TYPE = E;
+
+
+GO
+

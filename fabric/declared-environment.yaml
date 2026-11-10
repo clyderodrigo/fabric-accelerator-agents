@@ -1,0 +1,94 @@
+# Declared environment - Fabric accelerator
+#
+# Describes the single workspace that `dateng/` is connected to.
+# Item inventory is NOT declared here: it is read from each folder's .platform file.
+#
+# Values marked "confirm" were not observable from the repository and have been left empty
+# rather than guessed. Fill them in from the portal before running verify-environment.
+
+version: 1
+
+tenant:
+  name: ""            # confirm - display name only, for humans
+  id: ""              # confirm - leave empty rather than guessing
+
+capacity:
+  displayName: ""     # confirm - resolved via list_capacities when id is empty
+  id: "e4eb626a-4082-4143-983d-6fc9284b74cd"
+  # id observed as the `capacityId` of the Level1 Transform notebook activity in the source
+  # repository. Not confirmed against the tenant.
+  sku: ""             # confirm - asserted value, compared by verify-environment
+  region: ""          # confirm
+
+workspaces:
+  - key: accelerator
+    displayName: ""   # confirm - the workspace dateng/ is connected to
+    stage: dev
+    capacity: ""      # confirm - displayName of the capacity above, once filled in
+    roles: []
+    git:
+      provider: ""    # confirm - azure-devops | github
+      organization: ""  # confirm
+      project: ""     # confirm - Azure DevOps only
+      repository: ""  # confirm
+      branch: ""      # confirm
+      directory: /dateng
+    dependsOn: []
+    notes: >-
+      Single workspace holding all three medallion layers. Every item in dateng/ belongs here.
+      Workspace and item identifiers are resolved at run time through the accelerator-config
+      Variable Library, so the same item definitions serve every stage.
+
+# Connections are unverifiable via MCP. Declared so runbook 3 can build the binding table
+# without rediscovering it from item definitions, and so the four ids in the Variable Library
+# have a documented owner.
+connections:
+  - name: controlDB
+    type: Sql
+    scope: workspace
+    usedBy:
+      - workspace: accelerator
+        item: Master ELT ASQL
+      - workspace: accelerator
+        item: Ingest ASQL Table
+      - workspace: accelerator
+        item: Level1 Transform
+      - workspace: accelerator
+        item: Level2 Transform
+    declared: true
+
+  - name: wwi-source-sql
+    type: Sql
+    scope: workspace
+    usedBy:
+      - workspace: accelerator
+        item: wwi-elt-framework
+      - workspace: accelerator
+        item: Ingest ASQL Table
+    declared: true
+
+  - name: wwi-mirror-source
+    type: AzureSqlDatabase
+    scope: workspace
+    usedBy:
+      - workspace: accelerator
+        item: WideWorldImporters-mirror
+    declared: true
+
+  - name: mirror-ingest
+    type: Sql
+    scope: workspace
+    usedBy:
+      - workspace: accelerator
+        item: Ingest MirrorDB Table
+    declared: true
+
+# No cross-workspace references: every item lives in the one workspace above.
+# Intra-workspace references that do NOT travel through the Variable Library are listed in
+# dateng/GUID-INVENTORY.md section 5 (eventstream sources, notebook default_lakehouse,
+# KQLDashboard databaseArtifactId, KQL cluster host).
+crossWorkspaceReferences: []
+
+deploymentPipelines: []
+# No deployment pipeline is configured. When one is added, the DEV -> TST -> PRD value set
+# switch is item state, not definition, so record the active value set per workspace here.

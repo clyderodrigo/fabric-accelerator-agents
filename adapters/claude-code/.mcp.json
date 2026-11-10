@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "fabric-core": {
+      "type": "http",
+      "url": "https://api.fabric.microsoft.com/v1/mcp/core",
+      "headersHelper": "node \"${CLAUDE_PLUGIN_ROOT}/scripts/fabric-mcp-headers.mjs\""
+    },
+    "fabric-local": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@microsoft/fabric-mcp@latest",
+        "server",
+        "start",
+        "--mode",
+        "all",
+        "--namespace",
+        "docs"
+      ]
+    }
+  }
+}

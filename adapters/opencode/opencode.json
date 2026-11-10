@@ -1,0 +1,203 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "servers": {
+      "fabric-core": {
+        "type": "remote",
+        "url": "https://api.fabric.microsoft.com/v1/mcp/core",
+        "oauth": false,
+        "codemode": false,
+        "headers": {
+          "Authorization": "Bearer {env:FABRIC_MCP_TOKEN}"
+        }
+      },
+      "fabric-local": {
+        "type": "local",
+        "command": [
+          "npx",
+          "-y",
+          "@microsoft/fabric-mcp@latest",
+          "server",
+          "start",
+          "--mode",
+          "all",
+          "--namespace",
+          "docs"
+        ],
+        "codemode": false
+      }
+    }
+  },
+  "permissions": [
+    {
+      "action": "shell",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "fabric-core_*",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "fabric-core_delete_workspace",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
+      "action": "fabric-core_delete_item",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
+      "action": "fabric-core_delete_folder",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
+      "action": "fabric-core_delete_workspace_role",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
+      "action": "fabric-core_onelake_delete_shortcut",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
+      "action": "fabric-core_onelake_delete_data_access_role",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
+      "action": "fabric-core_delete_*",
+      "resource": "*",
+      "effect": "deny"
+    },
+    {
+      "action": "fabric-local_*",
+      "resource": "*",
+      "effect": "ask"
+    },
+    {
+      "action": "fabric-local_docs_list-item-types",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-local_docs_item-api-spec",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-local_docs_platform-api-spec",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-local_docs_item-definitions",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-local_docs_best-practices",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-local_docs_api-examples",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_search_catalog",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_list_workspaces",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_workspace",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_list_workspace_roles",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_workspace_role",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_list_items",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_item",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_item_definition",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_list_folders",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_folder",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_list_capacities",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_operation_state",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_operation_result",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_get_knowledge",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_onelake_list_shortcuts",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_onelake_get_shortcut",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_onelake_list_data_access_roles",
+      "resource": "*",
+      "effect": "allow"
+    },
+    {
+      "action": "fabric-core_onelake_get_settings",
+      "resource": "*",
+      "effect": "allow"
+    }
+  ]
+}

@@ -1,0 +1,738 @@
+{
+    "properties": {
+    "libraryVariables": {
+      "l1_notebook_id": {
+        "libraryName": "accelerator-config",
+        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "variableName": "l1_notebook_id",
+        "type": "String"
+      }
+    },
+    "activities": [
+      {
+        "name": "WWI_Ingest_Definition",
+        "type": "Copy",
+        "dependsOn": [],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": "select \n\t'WWI' as [SourceSystemName]\n\t, t.name as [StreamName]\n\t,'Wide World Importers' as [SourceSystemDescription]\n\t,'Azure SQL' as [Backend]\n\t,(s.name + '.' + t.name) as [EntityName]\n\t, c.name as [DeltaName]\n\t, (CASE WHEN c.name is not null then cast('2013-01-01' as datetime)\n\t\tELSE cast('1900-01-01' as datetime)\n\t END) as [LastDeltaDate]\n    , (CASE WHEN c.name is not null then 129600 --90days\n\t\tELSE NULL\n\t END)  as [MaxIntervalMinutes]\n\t,'Files' as [DestinationRawFileSystem]\n    ,'raw_bronze/wwi/'+ s.name +'/'+  t.name +'/YYYY-MM' as [DestinationRawFolder]\n    ,s.name +'_'+ t.name + '_'+ 'YYYY-MM-DD_HHMISS.parquet' as [DestinationRawFile]\n    ,3 as [MaxRetries]\n    ,cast(1 as bit) as [ActiveFlag]\n    ,cast(1 as bit) as [L1TransformationReqdFlag]\n    ,cast(1 as bit) as [L2TransformationReqdFlag]\n    ,cast(0 as bit) as [DelayL1TransformationFlag]\n\t,cast(0 as bit) as [DelayL2TransformationFlag]\nfrom sys.tables as t\ninner join sys.schemas as s\n\ton s.schema_id = t.schema_id\n\tand s.name in ('Application','Purchasing','Sales')\n\tand t.name in ('customertransactions','transactiontypes','paymentmethods','orders','people','purchaseorders','suppliertransactions')\nleft join sys.columns as c\n\ton c.object_id = t.object_id\n\tand c.name='LastEditedWhen'",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "annotations": [],
+              "type": "AzureSqlTable",
+              "schema": [],
+              "typeProperties": {
+                "database": "WideWorldImporters"
+              },
+              "externalReferences": {
+                "connection": "e7e44202-0cc1-4947-8192-a97761f62679"
+              }
+            }
+          },
+          "sink": {
+            "type": "AzureSqlSink",
+            "writeBehavior": "upsert",
+            "upsertSettings": {
+              "useTempDB": true,
+              "keys": [
+                "SourceSystemName",
+                "StreamName"
+              ]
+            },
+            "sqlWriterUseTableLock": false,
+            "disableMetricsCollection": false,
+            "datasetSettings": {
+              "annotations": [],
+              "type": "AzureSqlTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": "ELT",
+                "table": "IngestDefinition",
+                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              },
+              "externalReferences": {
+                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              }
+            }
+          },
+          "enableStaging": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "SourceSystemName",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "3"
+                },
+                "sink": {
+                  "name": "SourceSystemName",
+                  "physicalType": "varchar",
+                  "length": "50"
+                }
+              },
+              {
+                "source": {
+                  "name": "StreamName",
+                  "type": "String",
+                  "physicalType": "nvarchar",
+                  "length": "128"
+                },
+                "sink": {
+                  "name": "StreamName",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "SourceSystemDescription",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "20"
+                },
+                "sink": {
+                  "name": "SourceSystemDescription",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "Backend",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "9"
+                },
+                "sink": {
+                  "name": "Backend",
+                  "physicalType": "varchar",
+                  "length": "30"
+                }
+              },
+              {
+                "source": {
+                  "name": "EntityName",
+                  "type": "String",
+                  "physicalType": "nvarchar",
+                  "length": "257"
+                },
+                "sink": {
+                  "name": "EntityName",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "DeltaName",
+                  "type": "String",
+                  "physicalType": "nvarchar",
+                  "length": "128"
+                },
+                "sink": {
+                  "name": "WatermarkColName",
+                  "physicalType": "varchar",
+                  "length": "50"
+                }
+              },
+              {
+                "source": {
+                  "name": "LastDeltaDate",
+                  "type": "DateTime",
+                  "physicalType": "datetime"
+                },
+                "sink": {
+                  "name": "LastDeltaDate",
+                  "physicalType": "datetime2",
+                  "precision": 7
+                }
+              },
+              {
+                "source": {
+                  "name": "MaxIntervalMinutes",
+                  "type": "Int32",
+                  "physicalType": "int"
+                },
+                "sink": {
+                  "name": "MaxIntervalMinutes",
+                  "physicalType": "int"
+                }
+              },
+              {
+                "source": {
+                  "name": "DestinationRawFileSystem",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "5"
+                },
+                "sink": {
+                  "name": "DestinationRawFileSystem",
+                  "physicalType": "varchar",
+                  "length": "50"
+                }
+              },
+              {
+                "source": {
+                  "name": "DestinationRawFolder",
+                  "type": "String",
+                  "physicalType": "nvarchar",
+                  "length": "280"
+                },
+                "sink": {
+                  "name": "DestinationRawFolder",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "DestinationRawFile",
+                  "type": "String",
+                  "physicalType": "nvarchar",
+                  "length": "283"
+                },
+                "sink": {
+                  "name": "DestinationRawFile",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "MaxRetries",
+                  "type": "Int32",
+                  "physicalType": "int"
+                },
+                "sink": {
+                  "name": "MaxRetries",
+                  "physicalType": "int"
+                }
+              },
+              {
+                "source": {
+                  "name": "ActiveFlag",
+                  "type": "Boolean",
+                  "physicalType": "bit"
+                },
+                "sink": {
+                  "name": "ActiveFlag",
+                  "physicalType": "bit"
+                }
+              },
+              {
+                "source": {
+                  "name": "L1TransformationReqdFlag",
+                  "type": "Boolean",
+                  "physicalType": "bit"
+                },
+                "sink": {
+                  "name": "L1TransformationReqdFlag",
+                  "physicalType": "bit"
+                }
+              },
+              {
+                "source": {
+                  "name": "L2TransformationReqdFlag",
+                  "type": "Boolean",
+                  "physicalType": "bit"
+                },
+                "sink": {
+                  "name": "L2TransformationReqdFlag",
+                  "physicalType": "bit"
+                }
+              },
+              {
+                "source": {
+                  "name": "DelayL1TransformationFlag",
+                  "type": "Boolean",
+                  "physicalType": "bit"
+                },
+                "sink": {
+                  "name": "DelayL1TransformationFlag",
+                  "physicalType": "bit"
+                }
+              },
+              {
+                "source": {
+                  "name": "DelayL2TransformationFlag",
+                  "physicalType": "bit"
+                },
+                "sink": {
+                  "name": "DelayL2TransformationFlag",
+                  "physicalType": "bit"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      },
+      {
+        "name": "WWI_L1T_Definition",
+        "type": "Copy",
+        "dependsOn": [
+          {
+            "activity": "WWI_Ingest_Definition",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": "select i.IngestID\n,'L1Transform-Generic-Fabric' as [NotebookName]\n, i.DestinationRawFileSystem as [InputRawFileSystem]\n, i.DestinationRawFolder as [InputRawFileFolder]\n, i.DestinationRawFile as [InputRawFile]\n, 'Not Applicable' as [OutputL1CurateFileSystem]\n, 'Not Applicable' as [OutputL1CuratedFolder]\n, 'Not Applicable' as [OutputL1CuratedFile]\n,i.WatermarkColName\n, 'silver.'+ replace(lower(i.EntityName),'.','_') as [OutputDWTable]\n,'overwrite' as [OutputDWTableWriteMode]\n,3 as [MaxRetries]\n,cast(1 as bit) as [ActiveFlag]\nfrom elt.IngestDefinition as i\nwhere i.SourceSystemName='WWI'",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None",
+            "datasetSettings": {
+              "annotations": [],
+              "type": "AzureSqlTable",
+              "schema": [],
+              "typeProperties": {
+                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              },
+              "externalReferences": {
+                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              }
+            }
+          },
+          "sink": {
+            "type": "AzureSqlSink",
+            "writeBehavior": "upsert",
+            "upsertSettings": {
+              "useTempDB": true,
+              "keys": [
+                "InputRawFileSystem",
+                "InputRawFileFolder",
+                "InputRawFile",
+                "OutputDWTable"
+              ]
+            },
+            "sqlWriterUseTableLock": false,
+            "disableMetricsCollection": false,
+            "datasetSettings": {
+              "annotations": [],
+              "type": "AzureSqlTable",
+              "schema": [],
+              "typeProperties": {
+                "schema": "ELT",
+                "table": "L1TransformDefinition",
+                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              },
+              "externalReferences": {
+                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              }
+            }
+          },
+          "enableStaging": false,
+          "translator": {
+            "type": "TabularTranslator",
+            "mappings": [
+              {
+                "source": {
+                  "name": "IngestID",
+                  "type": "Int32",
+                  "physicalType": "int"
+                },
+                "sink": {
+                  "name": "IngestID",
+                  "physicalType": "int"
+                }
+              },
+              {
+                "source": {
+                  "name": "NotebookName",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "26"
+                },
+                "sink": {
+                  "name": "ComputeName",
+                  "physicalType": "varchar",
+                  "length": "100"
+                }
+              },
+              {
+                "source": {
+                  "name": "InputRawFileSystem",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "50"
+                },
+                "sink": {
+                  "name": "InputRawFileSystem",
+                  "physicalType": "varchar",
+                  "length": "50"
+                }
+              },
+              {
+                "source": {
+                  "name": "InputRawFileFolder",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "200"
+                },
+                "sink": {
+                  "name": "InputRawFileFolder",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "InputRawFile",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "200"
+                },
+                "sink": {
+                  "name": "InputRawFile",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "OutputL1CurateFileSystem",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "14"
+                },
+                "sink": {
+                  "name": "OutputL1CurateFileSystem",
+                  "physicalType": "varchar",
+                  "length": "50"
+                }
+              },
+              {
+                "source": {
+                  "name": "OutputL1CuratedFolder",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "14"
+                },
+                "sink": {
+                  "name": "OutputL1CuratedFolder",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "OutputL1CuratedFile",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "14"
+                },
+                "sink": {
+                  "name": "OutputL1CuratedFile",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "OutputDWTable",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "MAX"
+                },
+                "sink": {
+                  "name": "OutputDWTable",
+                  "physicalType": "varchar",
+                  "length": "200"
+                }
+              },
+              {
+                "source": {
+                  "name": "OutputDWTableWriteMode",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "9"
+                },
+                "sink": {
+                  "name": "OutputDWTableWriteMode",
+                  "physicalType": "varchar",
+                  "length": "20"
+                }
+              },
+              {
+                "source": {
+                  "name": "MaxRetries",
+                  "type": "Int32",
+                  "physicalType": "int"
+                },
+                "sink": {
+                  "name": "MaxRetries",
+                  "physicalType": "int"
+                }
+              },
+              {
+                "source": {
+                  "name": "WatermarkColName",
+                  "type": "String",
+                  "physicalType": "varchar",
+                  "length": "50"
+                },
+                "sink": {
+                  "name": "WatermarkColName",
+                  "physicalType": "varchar",
+                  "length": "50"
+                }
+              },
+              {
+                "source": {
+                  "name": "ActiveFlag",
+                  "type": "Boolean",
+                  "physicalType": "bit"
+                },
+                "sink": {
+                  "name": "ActiveFlag",
+                  "physicalType": "bit"
+                }
+              }
+            ],
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          }
+        }
+      },
+      {
+        "name": "Get WWI PK cols",
+        "type": "Lookup",
+        "dependsOn": [
+          {
+            "activity": "WWI_L1T_Definition",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "source": {
+            "type": "AzureSqlSource",
+            "sqlReaderQuery": "SELECT lower(Tab.Table_Schema + '_' +  Tab.Table_Name) as [OutputDWTable]\n, STRING_AGG(Col.Column_Name,'|') as [LookupColumns]\n, 'append' as [OutputDWTableWriteMode]\nfrom \n    INFORMATION_SCHEMA.TABLE_CONSTRAINTS Tab, \n    INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE Col \nWHERE \n    Col.Constraint_Name = Tab.Constraint_Name\n    AND Col.Table_Name = Tab.Table_Name\n    AND Tab.Constraint_Type = 'PRIMARY KEY'\n\tAND Tab.TABLE_SCHEMA IN  ('Application','Purchasing','Sales')\n\tAND Tab.TABLE_NAME IN ('customertransactions','transactiontypes','paymentmethods','orders','people','purchaseorders','suppliertransactions')\nGROUP BY lower(Tab.Table_Schema + '_' +  Tab.Table_Name)",
+            "queryTimeout": "02:00:00",
+            "partitionOption": "None"
+          },
+          "firstRowOnly": false,
+          "datasetSettings": {
+            "annotations": [],
+            "type": "AzureSqlTable",
+            "schema": [],
+            "typeProperties": {
+              "database": "WideWorldImporters"
+            },
+            "externalReferences": {
+              "connection": "e7e44202-0cc1-4947-8192-a97761f62679"
+            }
+          }
+        }
+      },
+      {
+        "name": "ForEach PK",
+        "type": "ForEach",
+        "dependsOn": [
+          {
+            "activity": "Get WWI PK cols",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "Update Notebook ID",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "typeProperties": {
+          "items": {
+            "value": "@activity('Get WWI PK cols').output.value",
+            "type": "Expression"
+          },
+          "isSequential": false,
+          "activities": [
+            {
+              "name": "Update WWI L1T",
+              "type": "Script",
+              "dependsOn": [],
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureOutput": false,
+                "secureInput": false
+              },
+              "typeProperties": {
+                "scripts": [
+                  {
+                    "parameters": [
+                      {
+                        "name": "lookupcolumns",
+                        "type": "String",
+                        "value": {
+                          "value": "@item().LookupColumns",
+                          "type": "Expression"
+                        },
+                        "direction": "Input"
+                      },
+                      {
+                        "name": "writemode",
+                        "type": "String",
+                        "value": {
+                          "value": "@item().OutputDWTableWriteMode",
+                          "type": "Expression"
+                        },
+                        "direction": "Input"
+                      },
+                      {
+                        "name": "dwtable",
+                        "type": "String",
+                        "value": {
+                          "value": "@item().OutputDWTable",
+                          "type": "Expression"
+                        },
+                        "direction": "Input"
+                      }
+                    ],
+                    "type": "NonQuery",
+                    "text": {
+                      "value": "UPDATE [ELT].[L1TransformDefinition]\nSET LookupColumns = @lookupColumns\n, OutputDWTableWriteMode = @writemode\nWHERE [OutputDWTable]= 'silver.'+ @dwtable",
+                      "type": "Expression"
+                    }
+                  }
+                ],
+                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              },
+              "externalReferences": {
+                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "Update Notebook ID",
+        "type": "Script",
+        "dependsOn": [
+          {
+            "activity": "WWI_L1T_Definition",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "scripts": [
+            {
+              "parameters": [
+                {
+                  "name": "L1TransformGenericFabric",
+                  "type": "String",
+                  "value": {
+                    "value": "@pipeline().libraryVariables.l1_notebook_id",
+                    "type": "Expression"
+                  },
+                  "direction": "Input"
+                }
+              ],
+              "type": "NonQuery",
+              "text": {
+                "value": "Update [ELT].[L1TransformDefinition]\nSet ComputeName = @L1TransformGenericFabric\nwhere ComputeName ='L1Transform-Generic-Fabric'",
+                "type": "Expression"
+              }
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      },
+      {
+        "name": "Insert L2T_Definition",
+        "type": "Script",
+        "dependsOn": [
+          {
+            "activity": "ForEach PK",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ],
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureOutput": false,
+          "secureInput": false
+        },
+        "typeProperties": {
+          "scripts": [
+            {
+              "parameters": [
+                {
+                  "name": "SourceSystem",
+                  "type": "String",
+                  "value": "WWI",
+                  "direction": "Input"
+                }
+              ],
+              "type": "NonQuery",
+              "text": {
+                "value": "update elt.IngestDefinition\nset L2TransformationReqdFlag=1\nwhere SourceSystemName = @SourceSystem\nand StreamName in ('CustomerTransactions','Orders','PurchaseOrders')\n\nInsert into [ELT].[L2TransformDefinition]\n\t([IngestID]\n\t,[L1TransformID]\n\t,[ComputeName]\n\t,[InputType]\n\t,[InputFileSystem]\n\t,[InputFileFolder]\n\t,[OutputL2CurateFileSystem]\n\t,[OutputL2CuratedFolder]\n\t,[OutputL2CuratedFile]\n\t,[InputDWTable]\n\t,[WatermarkColName]\n\t,[OutputDWTable]\n\t,[OutputDWTableWriteMode]\n\t,[ActiveFlag])\nSelect i.IngestID\n\t,l1.L1TransformID\n\t,'[gold].['+ 'create_'+  lower(i.StreamName) + '_monthly_snapshot]' as [ComputeName]\n\t,'Curated' as [InputType]\n\t, 'Tables' as [InputFileSystem]\n\t, l1.OutputDWTable as [InputFileFolder]\n\t, 'Tables' as [OutputL2CurateFileSystem]\n\t, 'gold' as [OutputL2CuratedFolder]\n\t, lower(i.StreamName + '_monthly_snapshot') as [OutputL2CuratedFile]\n\t,l1.OutputDWTable  as [InputDWTable]\n\t,i.WatermarkColName\n\t,lower('[gold].['+ i.StreamName + '_monthly_snapshot]') as [OutputDWTable]\n\t,'append' as [OutputDWTableWriteMode]\n\t, cast(1 as bit) as [ActiveFlag]\nfrom elt.IngestDefinition as i\n\tinner join elt.L1TransformDefinition as l1\n\t\ton i.IngestID =l1.IngestID\nwhere l1.IngestID in (select IngestID from elt.IngestDefinition\n\t\t\t\t\twhere SourceSystemName = @SourceSystem\n\t\t\t\t\tand StreamName in ('CustomerTransactions','Orders','PurchaseOrders')\n\t\t\t\t\tand L2TransformationReqdFlag=1)",
+                "type": "Expression"
+              }
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00",
+          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+        },
+        "externalReferences": {
+          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+        }
+      }
+    ]
+  }
+}

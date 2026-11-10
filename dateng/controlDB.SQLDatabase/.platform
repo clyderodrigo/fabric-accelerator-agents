@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SQLDatabase",
+    "displayName": "controlDB"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "2aaee3b7-af3f-b51e-4fb0-70ea78d6902e"
+  }
+}
