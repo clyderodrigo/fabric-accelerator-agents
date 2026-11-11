@@ -1,0 +1,31 @@
+---
+# Source-connection manifest
+#
+# Human-provided list of Fabric connections the deployment consumes. Connections are
+# tenant-level and cannot be created or read via MCP, so this file is the input the agent
+# waits for. Fill in the connection IDs after creating them in the portal.
+
+version: 1
+
+sources:
+  # One entry per source connection. The agent selects pipeline templates based on `type`.
+  - name: wwi-source-dev
+    type: AzureSqlDatabase          # AzureSqlDatabase | AzureSqlDatabase (mirror) | OneLake
+    connectionId: ""               # GUID from the portal connection
+    connectionName: "wwi-source-dev"
+    usedBy:
+      - Ingest ASQL Table
+      - Master ELT ASQL
+      - wwi-elt-framework
+
+  - name: wwi-mirror-source-dev
+    type: AzureSqlDatabase
+    connectionId: ""
+    connectionName: "wwi-mirror-source-dev"
+    usedBy:
+      - WideWorldImporters-mirror
+      - Ingest MirrorDB Table
+      - Master ELT MirrorDB
+
+# Handshake B (controlDB) is not listed here: it is created during deployment and its
+# connection ID is supplied interactively between steps 5 and 8 of runbook 06.

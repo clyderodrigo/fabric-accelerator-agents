@@ -65,7 +65,7 @@ This is the important part. The following have **no corresponding Core MCP tool*
 
 | Missing capability | Consequence |
 | --- | --- |
-| Assign a workspace to a capacity | `update_workspace` changes name and description only. Capacity assignment is a UI/portal action, verified afterwards through `get_workspace`. |
+| Assign a workspace to a capacity | `create_workspace` accepts `capacityId` at creation time. Reassignment of an existing workspace is a UI/portal action, verified afterwards through `get_workspace`. |
 | Read or set Git connection state | No tool. Sync status, branch, folder and connection health are UI-only. |
 | Create, read or bind connections | Connections are not workspace items and no tool exposes them. |
 | Read or configure deployment pipelines | No tool. Stages, workspace assignment and rules are UI-only. |

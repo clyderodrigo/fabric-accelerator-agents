@@ -153,6 +153,10 @@ Drives ordering in `provision-checklist`. `data` depends on `dateng`; `analytics
 Connections are **unverifiable** via MCP. `usedBy` exists so runbook 3 can build the binding table
 without rediscovering it from item definitions.
 
+In the MCP-driven model, source-connection IDs are supplied through `fabric/source-connections.yaml`
+rather than through this file. This file declares the *shape* of connections; the manifest
+declares their IDs.
+
 `scope: tenant` means the connection is shared across workspaces and is a stronger candidate for a
 deployment rule than for duplication per stage.
 
