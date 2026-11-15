@@ -1,0 +1,12 @@
+﻿{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "gold_dim_calendar",
+    "description": "Generated calendar spine 2018-01-01..2026-12-31, role-played in FactSales as Order/Due/Ship date."
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "9c1d2f44-7a10-4f6a-9a0e-6d3b5c2e8f03"
+  }
+}

@@ -1,4 +1,4 @@
-# Fabric notebook source
+﻿# Fabric notebook source
 
 # METADATA ********************
 
@@ -8,9 +8,9 @@
 # META   },
 # META   "dependencies": {
 # META     "lakehouse": {
-# META       "default_lakehouse": "cc80a0ab-603d-4df9-bdfc-c35a7e8ab095",
+# META       "default_lakehouse": "40f9a510-7e67-4b26-83c4-f946b1c41b74",
 # META       "default_lakehouse_name": "lh_silver",
-# META       "default_lakehouse_workspace_id": "8d8d00a7-0e8a-4e3b-8c0e-8dcafac7adec"
+# META       "default_lakehouse_workspace_id": "63f73055-fc7d-4d58-9646-a108f82eb52c"
 # META     }
 # META   }
 # META }

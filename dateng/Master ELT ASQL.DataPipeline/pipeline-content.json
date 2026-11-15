@@ -1,45 +1,45 @@
-{
+﻿{
     "properties": {
     "libraryVariables": {
       "bronze_workspace_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "bronze_workspace_id",
         "type": "String"
       },
       "silver_workspace_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "silver_workspace_id",
         "type": "String"
       },
       "gold_workspace_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "gold_workspace_id",
         "type": "String"
       },
       "bronze_lakehouse_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "bronze_lakehouse_id",
         "type": "String"
       },
       "silver_lakehouse_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "silver_lakehouse_id",
         "type": "String"
       },
       "gold_warehouse_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "gold_warehouse_id",
         "type": "String"
       },
       "gold_sql_endpoint": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "gold_sql_endpoint",
         "type": "String"
       }
@@ -77,11 +77,11 @@
           "datasetSettings": {
             "type": "AzureSqlTable",
             "typeProperties": {
-              "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
             },
             "schema": [],
             "externalReferences": {
-              "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
             },
             "annotations": []
           },
@@ -110,7 +110,7 @@
               "type": "ExecutePipeline",
               "typeProperties": {
                 "pipeline": {
-                  "referenceName": "7ea78b86-8d5e-4e2e-adc8-1138c278f6ab",
+                  "referenceName": "56dd59f4-e723-4705-8dbc-32a71d0f231a",
                   "type": "PipelineReference"
                 },
                 "parameters": {
@@ -263,7 +263,7 @@
         "type": "ExecutePipeline",
         "typeProperties": {
           "pipeline": {
-            "referenceName": "592635be-9979-40a3-8a91-0305b696cea2",
+            "referenceName": "131051b3-cc77-4ce2-84ae-37d53fb51a68",
             "type": "PipelineReference"
           },
           "parameters": {
@@ -308,7 +308,7 @@
         "type": "ExecutePipeline",
         "typeProperties": {
           "pipeline": {
-            "referenceName": "29ca711a-e20f-457c-a619-35b0310193ad",
+            "referenceName": "339f6e93-cf95-4d41-b586-9c5d241b7251",
             "type": "PipelineReference"
           },
           "parameters": {

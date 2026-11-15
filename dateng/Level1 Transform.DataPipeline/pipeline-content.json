@@ -1,4 +1,4 @@
-{
+﻿{
   "properties": {
     "activities": [
       {
@@ -37,7 +37,7 @@
         },
         "typeProperties": {
           "storedProcedureName": "[ELT].[UpdateTransformInstance_L1]",
-          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56",
           "storedProcedureParameters": {
             "L1TransformADFPipelineRunID": {
               "value": {
@@ -67,7 +67,7 @@
           }
         },
         "externalReferences": {
-          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+          "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
         }
       },
       {
@@ -290,7 +290,7 @@
         },
         "typeProperties": {
           "storedProcedureName": "[ELT].[UpdateTransformInstance_L1]",
-          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56",
           "storedProcedureParameters": {
             "IngestCount": {
               "value": {
@@ -348,7 +348,7 @@
           }
         },
         "externalReferences": {
-          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+          "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
         }
       },
       {
@@ -478,10 +478,10 @@
             "type": "AzureSqlTable",
             "schema": [],
             "typeProperties": {
-              "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
             },
             "externalReferences": {
-              "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
             }
           }
         }
@@ -517,7 +517,7 @@
               },
               "typeProperties": {
                 "storedProcedureName": "[ELT].[InsertTransformInstance_L2]",
-                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+                "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56",
                 "storedProcedureParameters": {
                   "CustomParameters": {
                     "value": {
@@ -732,7 +732,7 @@
                 }
               },
               "externalReferences": {
-                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+                "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
               }
             }
           ]
@@ -758,7 +758,7 @@
         },
         "typeProperties": {
           "storedProcedureName": "[ELT].[UpdateTransformInstance_L1]",
-          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7",
+          "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56",
           "storedProcedureParameters": {
             "L1TransformADFPipelineRunID": {
               "value": {
@@ -788,7 +788,7 @@
           }
         },
         "externalReferences": {
-          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+          "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
         }
       },
       {

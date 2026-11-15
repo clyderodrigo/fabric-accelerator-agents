@@ -1,4 +1,4 @@
-# Fabric notebook source
+﻿# Fabric notebook source
 
 # METADATA ********************
 
@@ -16,7 +16,25 @@
 
 # CELL ********************
 
-%run /EnvSettings
+config = notebookutils.variableLibrary.getLibrary("accelerator-config")
+
+# Fabric Workspace ID for the Bronze medallion layer
+bronzeWorkspaceId = config.bronze_workspace_id
+
+# Bronze Lakehouse name.
+bronzeLakehouseName = config.bronze_lakehouse_name
+
+# Fabric Workspace ID for the Silver medallion layer.
+silverWorkspaceId = config.silver_workspace_id
+
+# Silver Lakehouse name.
+silverLakehouseName = config.silver_lakehouse_name
+
+# Fabric Workspace ID for the Gold medallion layer.
+goldWorkspaceId = config.gold_workspace_id
+
+# Gold Lakehouse name (empty - gold is a warehouse, not a lakehouse).
+goldLakehouseName = config.gold_lakehouse_name
 
 # METADATA ********************
 

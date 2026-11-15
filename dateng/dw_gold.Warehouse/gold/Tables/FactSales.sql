@@ -1,0 +1,27 @@
+﻿CREATE TABLE [gold].[FactSales] (
+
+	[SalesOrderID]          int             NOT NULL,
+	[SalesOrderDetailID]    int             NOT NULL,
+	[SalesOrderNumber]      varchar(25)     NULL,
+	[CustomerKey]           int             NULL,
+	[ProductKey]            int             NULL,
+	[ShipToAddressKey]      int             NULL,
+	[BillToAddressKey]      int             NULL,
+	[OrderDateKey]          int             NULL,
+	[DueDateKey]            int             NULL,
+	[ShipDateKey]           int             NULL,
+	[OrderDate]             date            NULL,
+	[DueDate]               date            NULL,
+	[ShipDate]              date            NULL,
+	[Status]                smallint        NULL,
+	[OnlineOrderFlag]       bit             NULL,
+	[ShipMethod]            varchar(50)     NULL,
+	[OrderQty]              smallint        NULL,
+	[UnitPrice]             decimal(19,4)   NULL,
+	[UnitPriceDiscount]     decimal(19,4)   NULL,
+	[LineTotal]             decimal(19,4)   NULL,
+	[AllocatedTaxAmt]       decimal(19,4)   NULL,
+	[AllocatedFreight]      decimal(19,4)   NULL,
+	[AllocatedTotalDue]     decimal(19,4)   NULL,
+	[ModifiedDate]          datetime2(6)    NULL
+);

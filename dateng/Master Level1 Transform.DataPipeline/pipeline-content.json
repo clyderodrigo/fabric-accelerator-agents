@@ -1,15 +1,15 @@
-{
+﻿{
     "properties": {
     "libraryVariables": {
       "silver_workspace_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "silver_workspace_id",
         "type": "String"
       },
       "silver_lakehouse_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "silver_lakehouse_id",
         "type": "String"
       }
@@ -57,11 +57,11 @@
           "datasetSettings": {
             "type": "AzureSqlTable",
             "typeProperties": {
-              "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
             },
             "schema": [],
             "externalReferences": {
-              "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
             },
             "annotations": []
           },
@@ -91,7 +91,7 @@
               "type": "ExecutePipeline",
               "typeProperties": {
                 "pipeline": {
-                  "referenceName": "b25d5ad7-288a-4426-83f3-170aff284708",
+                  "referenceName": "ee7d2e99-c53e-4726-94e4-51c16d2d5b2b",
                   "type": "PipelineReference"
                 },
                 "parameters": {

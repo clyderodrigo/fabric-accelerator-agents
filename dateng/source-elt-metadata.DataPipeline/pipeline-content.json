@@ -1,16 +1,16 @@
-{
+﻿{
     "properties": {
     "libraryVariables": {
       "l1_notebook_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "l1_notebook_id",
         "type": "String"
       }
     },
     "activities": [
       {
-        "name": "WWI_Ingest_Definition",
+        "name": "AdventureWorks_Ingest_Definition",
         "type": "Copy",
         "dependsOn": [],
         "policy": {
@@ -23,7 +23,7 @@
         "typeProperties": {
           "source": {
             "type": "AzureSqlSource",
-            "sqlReaderQuery": "select \n\t'WWI' as [SourceSystemName]\n\t, t.name as [StreamName]\n\t,'Wide World Importers' as [SourceSystemDescription]\n\t,'Azure SQL' as [Backend]\n\t,(s.name + '.' + t.name) as [EntityName]\n\t, c.name as [DeltaName]\n\t, (CASE WHEN c.name is not null then cast('2013-01-01' as datetime)\n\t\tELSE cast('1900-01-01' as datetime)\n\t END) as [LastDeltaDate]\n    , (CASE WHEN c.name is not null then 129600 --90days\n\t\tELSE NULL\n\t END)  as [MaxIntervalMinutes]\n\t,'Files' as [DestinationRawFileSystem]\n    ,'raw_bronze/wwi/'+ s.name +'/'+  t.name +'/YYYY-MM' as [DestinationRawFolder]\n    ,s.name +'_'+ t.name + '_'+ 'YYYY-MM-DD_HHMISS.parquet' as [DestinationRawFile]\n    ,3 as [MaxRetries]\n    ,cast(1 as bit) as [ActiveFlag]\n    ,cast(1 as bit) as [L1TransformationReqdFlag]\n    ,cast(1 as bit) as [L2TransformationReqdFlag]\n    ,cast(0 as bit) as [DelayL1TransformationFlag]\n\t,cast(0 as bit) as [DelayL2TransformationFlag]\nfrom sys.tables as t\ninner join sys.schemas as s\n\ton s.schema_id = t.schema_id\n\tand s.name in ('Application','Purchasing','Sales')\n\tand t.name in ('customertransactions','transactiontypes','paymentmethods','orders','people','purchaseorders','suppliertransactions')\nleft join sys.columns as c\n\ton c.object_id = t.object_id\n\tand c.name='LastEditedWhen'",
+            "sqlReaderQuery": "select \n\t'AdventureWorks' as [SourceSystemName]\n\t, t.name as [StreamName]\n\t,'AdventureWorks' as [SourceSystemDescription]\n\t,'Azure SQL' as [Backend]\n\t,(s.name + '.' + t.name) as [EntityName]\n\t, c.name as [DeltaName]\n\t, (CASE WHEN c.name is not null then cast('2008-01-01' as datetime)\n\t\tELSE cast('1900-01-01' as datetime)\n\t END) as [LastDeltaDate]\n    , (CASE WHEN c.name is not null then 129600 --90days\n\t\tELSE NULL\n\t END)  as [MaxIntervalMinutes]\n\t,'Files' as [DestinationRawFileSystem]\n    ,'raw_bronze/adventureworks/'+ s.name +'/'+  t.name +'/YYYY-MM' as [DestinationRawFolder]\n    ,s.name +'_'+ t.name + '_'+ 'YYYY-MM-DD_HHMISS.parquet' as [DestinationRawFile]\n    ,3 as [MaxRetries]\n    ,cast(1 as bit) as [ActiveFlag]\n    ,cast(1 as bit) as [L1TransformationReqdFlag]\n    ,cast(1 as bit) as [L2TransformationReqdFlag]\n    ,cast(0 as bit) as [DelayL1TransformationFlag]\n\t,cast(0 as bit) as [DelayL2TransformationFlag]\nfrom sys.tables as t\ninner join sys.schemas as s\n\ton s.schema_id = t.schema_id\n\tand s.name in ('SalesLT')\n\tand t.name in ('Address','Customer','CustomerAddress','Product','ProductCategory','ProductDescription','ProductModel','ProductModelProductDescription','SalesOrderDetail','SalesOrderHeader')\nleft join sys.columns as c\n\ton c.object_id = t.object_id\n\tand c.name='ModifiedDate'",
             "queryTimeout": "02:00:00",
             "partitionOption": "None",
             "datasetSettings": {
@@ -31,10 +31,10 @@
               "type": "AzureSqlTable",
               "schema": [],
               "typeProperties": {
-                "database": "WideWorldImporters"
+                "database": "AdventureWorksSalesLT-6db8e416-f8d9-48cf-ab2c-ea786f8afa18"
               },
               "externalReferences": {
-                "connection": "e7e44202-0cc1-4947-8192-a97761f62679"
+                "connection": "3873650d-66bd-456d-9076-74fd9ef66360"
               }
             }
           },
@@ -57,10 +57,10 @@
               "typeProperties": {
                 "schema": "ELT",
                 "table": "IngestDefinition",
-                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+                "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
               },
               "externalReferences": {
-                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+                "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
               }
             }
           },
@@ -283,11 +283,11 @@
         }
       },
       {
-        "name": "WWI_L1T_Definition",
+        "name": "AdventureWorks_L1T_Definition",
         "type": "Copy",
         "dependsOn": [
           {
-            "activity": "WWI_Ingest_Definition",
+            "activity": "AdventureWorks_Ingest_Definition",
             "dependencyConditions": [
               "Succeeded"
             ]
@@ -303,7 +303,7 @@
         "typeProperties": {
           "source": {
             "type": "AzureSqlSource",
-            "sqlReaderQuery": "select i.IngestID\n,'L1Transform-Generic-Fabric' as [NotebookName]\n, i.DestinationRawFileSystem as [InputRawFileSystem]\n, i.DestinationRawFolder as [InputRawFileFolder]\n, i.DestinationRawFile as [InputRawFile]\n, 'Not Applicable' as [OutputL1CurateFileSystem]\n, 'Not Applicable' as [OutputL1CuratedFolder]\n, 'Not Applicable' as [OutputL1CuratedFile]\n,i.WatermarkColName\n, 'silver.'+ replace(lower(i.EntityName),'.','_') as [OutputDWTable]\n,'overwrite' as [OutputDWTableWriteMode]\n,3 as [MaxRetries]\n,cast(1 as bit) as [ActiveFlag]\nfrom elt.IngestDefinition as i\nwhere i.SourceSystemName='WWI'",
+            "sqlReaderQuery": "select i.IngestID\n,'L1Transform-Generic-Fabric' as [NotebookName]\n, i.DestinationRawFileSystem as [InputRawFileSystem]\n, i.DestinationRawFolder as [InputRawFileFolder]\n, i.DestinationRawFile as [InputRawFile]\n, 'Not Applicable' as [OutputL1CurateFileSystem]\n, 'Not Applicable' as [OutputL1CuratedFolder]\n, 'Not Applicable' as [OutputL1CuratedFile]\n,i.WatermarkColName\n, 'silver.'+ replace(lower(i.EntityName),'.','_') as [OutputDWTable]\n,'overwrite' as [OutputDWTableWriteMode]\n,3 as [MaxRetries]\n,cast(1 as bit) as [ActiveFlag]\nfrom elt.IngestDefinition as i\nwhere i.SourceSystemName='AdventureWorks'",
             "queryTimeout": "02:00:00",
             "partitionOption": "None",
             "datasetSettings": {
@@ -311,10 +311,10 @@
               "type": "AzureSqlTable",
               "schema": [],
               "typeProperties": {
-                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+                "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
               },
               "externalReferences": {
-                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+                "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
               }
             }
           },
@@ -339,10 +339,10 @@
               "typeProperties": {
                 "schema": "ELT",
                 "table": "L1TransformDefinition",
-                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+                "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
               },
               "externalReferences": {
-                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+                "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
               }
             }
           },
@@ -523,11 +523,11 @@
         }
       },
       {
-        "name": "Get WWI PK cols",
+        "name": "Get AdventureWorks PK cols",
         "type": "Lookup",
         "dependsOn": [
           {
-            "activity": "WWI_L1T_Definition",
+            "activity": "AdventureWorks_L1T_Definition",
             "dependencyConditions": [
               "Succeeded"
             ]
@@ -543,7 +543,7 @@
         "typeProperties": {
           "source": {
             "type": "AzureSqlSource",
-            "sqlReaderQuery": "SELECT lower(Tab.Table_Schema + '_' +  Tab.Table_Name) as [OutputDWTable]\n, STRING_AGG(Col.Column_Name,'|') as [LookupColumns]\n, 'append' as [OutputDWTableWriteMode]\nfrom \n    INFORMATION_SCHEMA.TABLE_CONSTRAINTS Tab, \n    INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE Col \nWHERE \n    Col.Constraint_Name = Tab.Constraint_Name\n    AND Col.Table_Name = Tab.Table_Name\n    AND Tab.Constraint_Type = 'PRIMARY KEY'\n\tAND Tab.TABLE_SCHEMA IN  ('Application','Purchasing','Sales')\n\tAND Tab.TABLE_NAME IN ('customertransactions','transactiontypes','paymentmethods','orders','people','purchaseorders','suppliertransactions')\nGROUP BY lower(Tab.Table_Schema + '_' +  Tab.Table_Name)",
+            "sqlReaderQuery": "SELECT lower(Tab.Table_Schema + '_' +  Tab.Table_Name) as [OutputDWTable]\n, STRING_AGG(Col.Column_Name,'|') as [LookupColumns]\n, 'append' as [OutputDWTableWriteMode]\nfrom \n    INFORMATION_SCHEMA.TABLE_CONSTRAINTS Tab, \n    INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE Col \nWHERE \n    Col.Constraint_Name = Tab.Constraint_Name\n    AND Col.Table_Name = Tab.Table_Name\n    AND Tab.Constraint_Type = 'PRIMARY KEY'\n\tAND Tab.TABLE_SCHEMA IN  ('SalesLT')\n\tAND Tab.TABLE_NAME IN ('Address','Customer','CustomerAddress','Product','ProductCategory','ProductDescription','ProductModel','ProductModelProductDescription','SalesOrderDetail','SalesOrderHeader')\nGROUP BY lower(Tab.Table_Schema + '_' +  Tab.Table_Name)",
             "queryTimeout": "02:00:00",
             "partitionOption": "None"
           },
@@ -553,10 +553,10 @@
             "type": "AzureSqlTable",
             "schema": [],
             "typeProperties": {
-              "database": "WideWorldImporters"
+              "database": "AdventureWorksSalesLT-6db8e416-f8d9-48cf-ab2c-ea786f8afa18"
             },
             "externalReferences": {
-              "connection": "e7e44202-0cc1-4947-8192-a97761f62679"
+              "connection": "3873650d-66bd-456d-9076-74fd9ef66360"
             }
           }
         }
@@ -566,7 +566,7 @@
         "type": "ForEach",
         "dependsOn": [
           {
-            "activity": "Get WWI PK cols",
+            "activity": "Get AdventureWorks PK cols",
             "dependencyConditions": [
               "Succeeded"
             ]
@@ -580,13 +580,13 @@
         ],
         "typeProperties": {
           "items": {
-            "value": "@activity('Get WWI PK cols').output.value",
+            "value": "@activity('Get AdventureWorks PK cols').output.value",
             "type": "Expression"
           },
           "isSequential": false,
           "activities": [
             {
-              "name": "Update WWI L1T",
+              "name": "Update AdventureWorks L1T",
               "type": "Script",
               "dependsOn": [],
               "policy": {
@@ -635,10 +635,10 @@
                     }
                   }
                 ],
-                "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+                "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
               },
               "externalReferences": {
-                "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+                "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
               }
             }
           ]
@@ -649,7 +649,7 @@
         "type": "Script",
         "dependsOn": [
           {
-            "activity": "WWI_L1T_Definition",
+            "activity": "AdventureWorks_L1T_Definition",
             "dependencyConditions": [
               "Succeeded"
             ]
@@ -684,10 +684,10 @@
             }
           ],
           "scriptBlockExecutionTimeout": "02:00:00",
-          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+          "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
         },
         "externalReferences": {
-          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+          "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
         }
       },
       {
@@ -715,7 +715,7 @@
                 {
                   "name": "SourceSystem",
                   "type": "String",
-                  "value": "WWI",
+                  "value": "AdventureWorks",
                   "direction": "Input"
                 }
               ],
@@ -727,10 +727,10 @@
             }
           ],
           "scriptBlockExecutionTimeout": "02:00:00",
-          "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+          "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
         },
         "externalReferences": {
-          "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+          "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
         }
       }
     ]

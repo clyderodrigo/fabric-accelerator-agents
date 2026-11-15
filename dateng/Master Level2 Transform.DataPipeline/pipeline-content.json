@@ -1,21 +1,21 @@
-{
+﻿{
     "properties": {
     "libraryVariables": {
       "gold_workspace_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "gold_workspace_id",
         "type": "String"
       },
       "gold_warehouse_id": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "gold_warehouse_id",
         "type": "String"
       },
       "gold_sql_endpoint": {
         "libraryName": "accelerator-config",
-        "libraryId": "bedb80f6-2c41-409c-8752-3fd2d2ef436b",
+        "libraryId": "2626aee7-7c74-4a0c-85af-9788d1e6c0b9",
         "variableName": "gold_sql_endpoint",
         "type": "String"
       }
@@ -63,11 +63,11 @@
           "datasetSettings": {
             "type": "AzureSqlTable",
             "typeProperties": {
-              "database": "controlDB-78d6902e-70ea-4fb0-b51e-af3f2aaee3b7"
+              "database": "controlDB-87e80af8-aa5d-45c2-99fd-069d2fef3f56"
             },
             "schema": [],
             "externalReferences": {
-              "connection": "78e8d795-a55c-412e-9b76-47ba404b4d51"
+              "connection": "c33d9f0e-0906-4766-9810-0f289fa54472"
             },
             "annotations": []
           },
@@ -96,7 +96,7 @@
               "type": "ExecutePipeline",
               "typeProperties": {
                 "pipeline": {
-                  "referenceName": "5a473c1e-fd95-4b0a-a4a0-33537c65a0d7",
+                  "referenceName": "8e2fe67d-de3b-42a8-a89a-4390399a61fa",
                   "type": "PipelineReference"
                 },
                 "parameters": {

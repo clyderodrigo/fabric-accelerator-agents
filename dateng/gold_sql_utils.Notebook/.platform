@@ -2,11 +2,11 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
   "metadata": {
     "type": "Notebook",
-    "displayName": "EnvSettings",
-    "description": "New notebook"
+    "displayName": "gold_sql_utils",
+    "description": "Shared TDS helpers for the gold warehouse layer."
   },
   "config": {
     "version": "2.0",
-    "logicalId": "eaa157da-233f-b49f-49f6-2133749cdd76"
+    "logicalId": "9c1d2f44-7a10-4f6a-9a0e-6d3b5c2e8f01"
   }
 }
