@@ -23,12 +23,38 @@ abandoned.
 3. **Create core items** in dependency order: Lakehouses → Warehouse → SQLDatabase →
    Notebooks → VariableLibrary. For each, read the repo folder, base64-encode its parts, and call
    `create_item(type, definition)`. Record every returned ID.
+   - **Shell-then-apply for child pipelines:** create child DataPipelines with `.platform` only
+     first (to reserve IDs for `referenceName` rewriting in parent orchestrators), then apply
+     full definitions via `update_item_definition` with injected IDs. Verify
+     `activities.length > 0` after the second pass — shells show `activities: []`.
+   - **Notebooks created with `.platform` only** need a second `update_item_definition` pass
+     to apply `notebook-content.py`.
+   - **`%run` helpers first.** Deploy a helper notebook such as `gold_sql_utils` before any
+     notebook that `%run`s it. A missing helper surfaces as a generic
+     `System_Cancelled_Session_Statements_Failed`, not as a missing-notebook error.
+   - **No placeholder GUIDs in the VariableLibrary.** Resolve every variable to the deployed value
+     before creating it. A stale GUID fails inside a notebook later, with no pointer back to the
+     library.
 4. **Handshake B** — pause. Human creates a connection to controlDB's SQL analytics endpoint
    and returns the connection ID. Do not proceed without it.
+   - **controlDB DDL via sqlcmd:** retrieve the real connection string via
+     `GET /v1/workspaces/{ws}/sqlDatabases/{sqlDatabaseId}` (returns `serverFqdn` and
+     `databaseName`). Apply `dateng/controlDB-deploy.sql` via sqlcmd with
+     `ActiveDirectoryAzCli` auth. MCP `execute_query` hits the SQL analytics endpoint
+     (system tables only) and cannot create tables (external policy blocks
+     `Microsoft.Sql/.../Tables/Create`).
+   - **Pipeline connections must be type `SQL`, not `OneLakeSql`.** `OneLakeSql` is read-only:
+     Lookup and Copy-source work, Copy-sink, `SqlServerStoredProcedure` and `Script` fail at run
+     time. See runbook 03.
 5. **Create DataPipelines** — for each pipeline in the source-connection manifest's matched
    pattern, inject workspace/item/connection IDs into the definition, then `create_item`.
-6. **Create MirroredDatabase** (optional) — inject the source connection ID.
-7. **Verify** — `list_items` + `get_item_definition` per item. Report which checks are
+6. **Gold layer** — tables and `gold.create_*` procedures are part of the Warehouse definition
+   (step 3); the orchestrator is a notebook. Adding objects later means fetching the current
+   warehouse definition, overlaying the repo `.sql` files, and re-sending **all** parts, including
+   the `.gitattributes` / `.gitignore` parts that exist only in the definition. Prove the path by
+   running `gold_dim_calendar`, which has no silver dependency.
+7. **Create MirroredDatabase** (optional) — inject the source connection ID.
+8. **Verify** — `list_items` + `get_item_definition` per item. Report which checks are
    agent-verifiable and which remain UI-only.
 
 ## Handshakes

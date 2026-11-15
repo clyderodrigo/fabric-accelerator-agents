@@ -49,6 +49,37 @@ Connections are tenant-level artifacts with no MCP tool. They are supplied by th
 consumed by the agent at creation time. The agent never creates, reads, or binds a connection.
 The handshake procedure is in runbook 06.
 
+## SQL Database DDL
+
+Fabric SQL Database items cannot be populated via MCP `execute_query` for table creation:
+an external Azure/Fabric policy blocks `Microsoft.Sql/Sqlservers/Databases/Schemas/Tables/Create`.
+The agent must retrieve the real connection string via
+`GET /v1/workspaces/{ws}/sqlDatabases/{id}` and have the human apply the consolidated DDL
+(`controlDB-deploy.sql`) via sqlcmd with `ActiveDirectoryAzCli` auth. The MCP `execute_query`
+tool hits the SQL analytics endpoint (system tables only) and is not a substitute for sqlcmd.
+
+## Definition updates are full replacements
+
+`update_item_definition` replaces every part. Fetch the current definition first, overlay the repo
+files, and re-send the complete set. Two traps measured on the gold Warehouse:
+
+- Parts exist in the definition that do not exist in the repo (`.gitattributes`, `.gitignore`).
+  Omitting them invalidates the payload.
+- Parts exist in the repo that are not in the definition (`xmla.json`). Sending them is wrong for
+  the Direct Lake model, so leave them out.
+
+Never drop objects by omitting them from a definition without explicit approval: an omission is a
+delete in effect, and `delete_*` is denied for a reason.
+
+## Never invent framework configuration
+
+If a configuration table the framework depends on is empty - `ELT.L1TransformDefinition`, for
+example - report it as a gap with the evidence (`SELECT COUNT(*)`, the procedure that reads it, and
+the observed failing stage). Do not synthesise rows to make a pipeline proceed. Fabricated config
+looks like progress and produces a layer that silently loads nothing.
+
+## Rationale
+
 ## Hooks are a second layer
 
 Where a host supports hooks, they add defence in depth. They are never the enforcement point —

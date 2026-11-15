@@ -120,6 +120,10 @@ existing workspace, Git integration configuration.
 | Deployment pipeline stages, assignments, rules | **No** | Fabric portal only |
 | Deployment pipeline deploy result | **No** | Fabric portal only |
 | Item-level binding correctness after promotion | **No** | Must be tested in the target stage |
+| SQL Database schema (tables/procs/functions) | **Partial** | MCP `execute_query` hits the SQL analytics endpoint (system tables only). Retrieve the real connection string via `GET /v1/workspaces/{ws}/sqlDatabases/{id}` and apply DDL via sqlcmd. Verify with `INFORMATION_SCHEMA.TABLES` via sqlcmd. |
+| Warehouse tables, procedures, row counts | **Yes, via sqlcmd** | `INFORMATION_SCHEMA.TABLES` / `sys.procedures` / `SELECT COUNT(*)` against `<warehouse-endpoint>,1433` with `ActiveDirectoryAzCli`. MCP has no warehouse query tool. |
+| Notebook cell output and failure detail | **No** | Job status returns only `System_Cancelled_Session_Statements_Failed`. Have the notebook append diagnostics to OneLake and read them back with a `storage.azure.com` token. |
+| Definition parts list for an item | Yes | `get_item_definition` (202 + poll, then `/result`) |
 
 When a row says **No**, the runbook's verification step is a UI check that the human performs and
 reports back. Never present a UI-only check as if the agent confirmed it.
@@ -136,7 +140,34 @@ When asked to provision or deploy an environment:
 4. Walk the runbooks in dependency order — `dateng`, then `data`, then `analytics`.
 5. For MCP-driven deployment, create items in dependency order, pausing for human inputs
    (connections) at the handshakes. Inject resolved IDs into downstream definitions before
-   creating them.
+   creating them. Two ordering rules discovered in practice:
+   - **Shell-then-apply for child pipelines:** create child DataPipelines with `.platform`
+     only first (to reserve IDs for `referenceName` rewriting in parent orchestrators),
+     then apply full definitions via `update_item_definition` with injected IDs. Verify
+     `activities.length > 0` after the second pass — shells show `activities: []`.
+   - **controlDB DDL via sqlcmd:** after creating the SQLDatabase item, retrieve its
+     real connection string via `GET /v1/workspaces/{ws}/sqlDatabases/{id}` (returns
+     `serverFqdn` and `databaseName`). Apply the consolidated DDL (`controlDB-deploy.sql`)
+     via sqlcmd with `ActiveDirectoryAzCli` auth. MCP `execute_query` hits the SQL analytics
+     endpoint (system tables only) and cannot create tables (external policy blocks
+     `Microsoft.Sql/Sqlservers/Databases/Schemas/Tables/Create`).
+   - **Pipeline connections must be type `SQL`, not `OneLakeSql`:** `OneLakeSql` is read-only.
+     Lookup and Copy-source work; Copy-sink, `SqlServerStoredProcedure` and `Script` fail at run
+     time. The replacement connection is a portal action, because REST creation of an `SQL`
+     connection to a Fabric SQL Database is rejected for every credential type the agent can use.
+   - **Warehouse definitions are full replacements:** fetch the current definition, overlay the
+     repo `.sql` files, and re-send every part. `.gitattributes` and `.gitignore` exist only in
+     the definition; `xmla.json` exists only in the repo. Warehouse DDL rejects `tinyint` (use
+     `smallint`) and rejects `OPTION (MAXRECURSION n)` (use `GENERATE_SERIES`).
+   - **Gold is a Warehouse, so Spark cannot load it.** The working shape is DDL plus
+     `gold.create_<table>` procedures, driven by `notebookutils.notebook.runMultiple` fanning out
+     to per-table notebooks that execute the procedure over TDS with `pyodbc` and the notebook's
+     own AAD token. `CREATE TABLE ... AS SELECT` procedures are not atomic: a failure after the
+     drop leaves the table missing, so re-apply the definition.
+   - **Notebook job failures are undiagnosable from REST.** Job status returns a generic
+     session error. Have the notebook append a log to OneLake with `notebookutils.fs.append` and
+     read it back via `https://onelake.dfs.fabric.microsoft.com/<ws>/<item>/<path>` with a
+     `storage.azure.com` token. Do this before rewriting a notebook blind.
 6. After each step, verify what is verifiable. Mark the rest as unverified and say why.
 7. Report in the format the skill specifies. Never summarise unverified steps as complete.
 
